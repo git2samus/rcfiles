@@ -1,0 +1,133 @@
+# vim: set filetype=sh :
+
+xterm_prompt() {
+    # adapted from ArhLinux /etc/bash.bashrc
+    if test "$TERM" = "xterm" -o \
+            "$TERM" = "xterm-color" -o \
+            "$TERM" = "xterm-256color" -o \
+            "$TERM" = "rxvt" -o \
+            "$TERM" = "rxvt-unicode" -o \
+            "$TERM" = "xterm-xfree86"; then
+        local k keys prompt_path="${PWD/$HOME/~}"
+        OLDIFS=$IFS IFS=/ prompt_path=($prompt_path) IFS=$OLDIFS
+        keys=("${!prompt_path[@]}")
+        for k in "${keys[@]:0:${#keys[@]}-1}"; do prompt_path[$k]=${prompt_path[$k]:0:1}; done
+        if ((${#prompt_path[@]} == 1)); then [[ ${prompt_path[0]} ]] || prompt_path[0]=/; fi
+        echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:$(list_join / "${prompt_path[@]}")\007"
+    fi
+}; export -f xterm_prompt
+
+mcd() {
+    mkdir "$1" && cd "$1"
+}; export -f mcd
+rcd() {
+    rmdir "$PWD" && cd ..
+}; export -f rcd
+
+mklab() {
+    local d=$(mktemp -d) && cd "$d" || return 1
+    clear; bash -i
+    find "$d" -delete && cd "$OLDPWD"
+}; export -f mklab
+
+list_join() {
+    local OLDIFS=$IFS
+    IFS=${1:?"Missing separator"}
+    echo "${*:2}"
+    IFS=$OLDIFS
+}; export -f list_join
+nl_join() {
+    list_join $'\n' "$@"
+}; export -f nl_join
+
+filter_uniq() {
+    awk '!a[$0]++'
+}; export -f filter_uniq
+
+hvim() {
+    local h=$1; shift
+    vim -c ":h $h | bd1 | normal zt" "$@"
+}; export -f hvim
+
+svim() {
+    local parent session branch a target
+    if [[ $1 = git ]]; then
+        shift
+        branch=$(git rev-parse --abbrev-ref HEAD)
+    fi
+
+    parent=${PWD%/*}
+    session=${PWD##*/}_${parent##*/}${branch:+:$branch}
+
+    if [[ $1 = ++ ]]; then
+        shift
+        # TODO allow to run in a different dir other than .
+        target=.
+        a=(); while IFS= read -r -d '' file; do
+            a+=("$file")
+        done < <(find "$target" -type f \( -exec fgrep -qI '' {} \; -o -empty \) -print0 | sort -z)
+        vim -c "chdir $target | $(printf 'SessionSaveAs %q' "$session")" "$@" -- "${a[@]}"
+    elif [[ $1 = + ]]; then
+        shift
+        vim -c "$(printf 'SessionSaveAs %q' "$session")" "$@"
+    else
+        vim -c "$(printf 'SessionOpen %q' "$session")" "$@"
+    fi
+}; export -f svim
+
+git_track() {
+    local remote=${1:?'missing remote'} branch=${2:?'missing branch'}
+    if [[ $3 ]]; then local git_args=(config -f "$3"); else local git_args=(config); fi
+    git "${git_args[@]}" "branch.$branch.remote" "$remote" && git "${git_args[@]}" "branch.$branch.merge" "refs/heads/$branch"
+    echo "[$branch]"; while read var val; do echo "${var#branch.$branch.}=$val"; done < <(git "${git_args[@]}" --get-regexp "^branch\\.$branch\\.")
+}; export -f git_track
+
+mkscreen() {
+    screen -S "$1" "$@"
+}; export -f mkscreen
+
+rscreen() {
+    if (($#)); then
+        screen -r "$@"
+    else
+        screen -list
+    fi
+}; export -f rscreen
+
+mkdeploy() {
+    local host deploy_gz=~/deploy.tar.gz
+    if [[ -d .git ]]; then
+        tar czf "$deploy_gz" --exclude='*.pyc' *
+        ssh db '
+            cd -P Adly/..                       &&
+            deploy_d=$(mktemp -dp .)            &&
+            tar xzomf - -C "$deploy_d"          &&
+            cp ~/local_settings.py "$deploy_d"  &&
+            crontab -l > ~/crontab              &&
+            crontab -r                          &&
+            mv {,old_}Adly                      &&
+            mv "$deploy_d" Adly                 &&
+            crontab ~/crontab                   &&
+            rm -R old_Adly
+        ' < "$deploy_gz" &
+        for host in web{1..3}; do
+            ssh "$host" '
+                cd -P Adly/..                       &&
+                deploy_d=$(mktemp -dp .)            &&
+                chown www-data "$deploy_d"          &&
+                tar xzomf - -C "$deploy_d"          &&
+                cp ~/local_settings.py "$deploy_d"  &&
+                /etc/init.d/apache2 stop            &&
+                mv {,old_}Adly                      &&
+                mv "$deploy_d" Adly                 &&
+                /etc/init.d/apache2 start           &&
+                rm -R old_Adly
+            ' < "$deploy_gz" &
+        done; wait
+    else
+        echo 'not a git repo' >&2
+        return 1
+    fi
+}; export -f mkdeploy
+
+[[ -e ~/.functionrc_local ]] && . ~/.functionrc_local

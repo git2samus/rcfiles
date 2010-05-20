@@ -1,0 +1,33 @@
+# vim: set filetype=sh:
+
+if [[ -d /etc/rc.d ]]; then
+    for daemon in /etc/rc.d/*; do
+        [[ -x $daemon ]] && alias "rc-${daemon##*/}=sudo $daemon"
+    done; unset daemon
+elif [[ -d /etc/init.d ]]; then
+    for daemon in /etc/init.d/*; do
+        [[ -x $daemon ]] && alias "rc-${daemon##*/}=sudo $daemon"
+    done; unset daemon
+fi
+
+alias mtab="cat /etc/mtab"
+alias fstab="cat /etc/fstab"
+
+alias today="date +%d/%m/%y"
+
+alias ll="ls -lh"
+alias lc="ls --color=auto"
+alias llc="ls -lh --color=auto"
+
+alias grepc="grep --color"
+alias egrepc="egrep --color"
+alias fgrepc="fgrep --color"
+
+alias git-np="git --no-pager"
+
+alias wget-mirror="wget -e robots=off --timestamping --recursive --level=inf --no-parent --page-requisites --convert-links --backup-converted"
+alias wget-fullpage="wget -e robots=off --page-requisites --span-hosts --convert-links"
+
+alias rm-pyc="find -name '*.pyc' -delete"
+
+[[ -e ~/.aliasrc_local ]] && . ~/.aliasrc_local
