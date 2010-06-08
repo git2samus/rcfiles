@@ -118,6 +118,11 @@ imap <C-CR> <CR>
 set pastetoggle=<F12>
 map <F12> <F12>
 
+" copy/paste shortcuts
+nmap <silent> <Leader>x "+x
+nmap <silent> <Leader>c "+y
+nmap <silent> <Leader>v "+gP
+
 
 " taken from /etc/vimrc
 " Only do this part when compiled with support for autocommands
