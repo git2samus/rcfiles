@@ -65,7 +65,7 @@ svim() {
         target=.
         a=(); while IFS= read -r -d '' file; do
             a+=("$file")
-        done < <(find "$target" -type f \( -exec fgrep -qI '' {} \; -o -empty \) -print0 | sort -z)
+        done < <(find "$target" -type f \( -empty -o -exec fgrep -qI '' {} \; \) -print0 | sort -z)
         vim -c "chdir $target | $(printf 'SessionSaveAs %q' "$session")" "$@" -- "${a[@]}"
     elif [[ $1 = + ]]; then
         shift
