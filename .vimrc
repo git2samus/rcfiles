@@ -65,7 +65,7 @@ nmap <silent> <Leader>t :silent set expandtab!<CR>:if &expandtab<CR>:set softtab
 
 " show tabs as blank-padded arrows, trailing spaces as middle-dots
 set list
-set listchars=tab:→\ ,trail:·,precedes:⇐,extends:⇒
+set listchars=tab:-\ ,trail:_,precedes:<,extends:>
 
 " tab and indent width
 set softtabstop=4
