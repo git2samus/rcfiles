@@ -94,40 +94,4 @@ rscreen() {
     fi
 }; export -f rscreen
 
-mkdeploy() {
-    local host deploy_gz=~/deploy.tar.gz
-    if [[ -d .git ]]; then
-        tar czf "$deploy_gz" --exclude='*.pyc' *
-        ssh db '
-            cd -P Adly/..                       &&
-            deploy_d=$(mktemp -dp .)            &&
-            tar xzomf - -C "$deploy_d"          &&
-            cp ~/local_settings.py "$deploy_d"  &&
-            crontab -l > ~/crontab              &&
-            crontab -r                          &&
-            mv {,old_}Adly                      &&
-            mv "$deploy_d" Adly                 &&
-            crontab ~/crontab                   &&
-            rm -R old_Adly
-        ' < "$deploy_gz" &
-        for host in web{1..3}; do
-            ssh "$host" '
-                cd -P Adly/..                       &&
-                deploy_d=$(mktemp -dp .)            &&
-                chown www-data "$deploy_d"          &&
-                tar xzomf - -C "$deploy_d"          &&
-                cp ~/local_settings.py "$deploy_d"  &&
-                /etc/init.d/apache2 stop            &&
-                mv {,old_}Adly                      &&
-                mv "$deploy_d" Adly                 &&
-                /etc/init.d/apache2 start           &&
-                rm -R old_Adly
-            ' < "$deploy_gz" &
-        done; wait
-    else
-        echo 'not a git repo' >&2
-        return 1
-    fi
-}; export -f mkdeploy
-
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local
