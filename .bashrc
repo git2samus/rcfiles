@@ -7,9 +7,9 @@ if [[ $- = *i* ]]; then
     PS1="\\[$t_reset\\]\\n\\[$t_bold\\]\\u@\\h:\\w\\[$t_reset\\]$gitps1\\n\\$ "; PS2='> '; PS3='? '; PS4='+ '
     unset t_bold t_reset
     bind -x '"\C-\M-l":kill -WINCH $$'
+    unalias -a; [[ -r ~/.aliasrc ]] && . ~/.aliasrc
 else
     PS1="\\n\\u@\\h:\\w$gitps1\\n\\$ "; PS2='> '; PS3='? '; PS4='+ '
 fi
 
 [[ -r ~/.bashrc_local ]] && . ~/.bashrc_local
-unalias -a; [[ -r ~/.aliasrc ]] && . ~/.aliasrc

@@ -24,7 +24,9 @@ nmap <silent> <Leader>M :silent set mouse=<CR>:set mouse?<CR>
 
 " enable statusbar
 set laststatus=2
-set statusline=%<%f\ %{&paste?'(p)\ ':''}%{GitBranch()}%h%m%r%=%-14.(%l,%c%V%)\ %P
+" TODO make this conditional
+" set statusline=%<%f\ %{&paste?'(p)\ ':''}%{GitBranch()}%h%m%r%=%-14.(%l,%c%V%)\ %P
+set statusline=%<%f\ %{&paste?'(p)\ ':''}%h%m%r%=%-14.(%l,%c%V%)\ %P
 " enable wildmenu for tab-completion
 set wildmenu
 " configure wildmenu to behave more like bash
