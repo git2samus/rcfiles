@@ -81,10 +81,9 @@ set foldmethod=indent
 set hlsearch
 " enable incremental search
 set incsearch
-" case-insensitive search
-set ignorecase
-" unless there's uppercase letters on the pattern
-set smartcase
+" case-sensitive search
+set noignorecase
+set nosmartcase
 
 " mimic D
 nmap Y y$
