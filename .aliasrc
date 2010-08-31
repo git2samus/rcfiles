@@ -15,6 +15,8 @@ alias fstab="cat /etc/fstab"
 
 alias today="date +%d/%m/%y"
 
+alias :e="vim"
+
 alias ll="ls -lh"
 alias lc="ls --color=auto"
 alias llc="ls -lh --color=auto"
