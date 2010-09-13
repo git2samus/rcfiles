@@ -87,13 +87,6 @@ set incsearch
 set noignorecase
 set nosmartcase
 
-" do something useful with this key
-cmap Q qa
-
-" replicate for x
-" TODO remap original :X
-cmap X xa
-
 " mimic D
 nmap Y y$
 
