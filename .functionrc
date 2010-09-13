@@ -94,4 +94,12 @@ rscreen() {
     fi
 }; export -f rscreen
 
+z() {
+    fgrep -Ir --color "$1" "${2:-.}"
+}; export -f z
+
+zz() {
+    grep -Ir --color "$1" "${2:-.}"
+}; export -f zz
+
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local
