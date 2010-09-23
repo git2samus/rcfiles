@@ -1,4 +1,4 @@
-shopt -s failglob histappend checkwinsize
+shopt -s extglob failglob histappend checkwinsize
 ((${BASH_VERSINFO[0]} >= 4)) && shopt -s globstar
 
 [[ -r ~/.gitsh ]] && gitps1='$(__git_ps1)' && . ~/.gitsh
