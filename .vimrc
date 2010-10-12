@@ -5,8 +5,8 @@ set hidden
 " enable inline ft settings
 set modeline
 
-" put temp files out of the way (has a problem with repeated names)
-set dir=/tmp
+" http://weevilgenius.net/2010/10/vim-tip-relocating-vim-swapfiles/
+set dir^=$HOME/.vim/.swp//
 
 " enable syntax highlight
 syntax on
