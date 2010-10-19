@@ -6,7 +6,7 @@ set hidden
 set modeline
 
 " http://weevilgenius.net/2010/10/vim-tip-relocating-vim-swapfiles/
-set dir^=$HOME/.vim/.swp//
+set dir^=/tmp//
 
 " enable syntax highlight
 syntax on
