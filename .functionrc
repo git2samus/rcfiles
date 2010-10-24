@@ -94,4 +94,58 @@ rscreen() {
     fi
 }; export -f rscreen
 
+# stupid wrapper for supid debian-like machines
+apt() {
+    local get_cmds=(
+       update
+       upgrade
+       install
+       remove
+       autoremove
+       purge
+       source
+       build-dep
+       dist-upgrade
+       dselect-upgrade
+       clean
+       autoclean
+       check
+    )
+
+    local cache_cmds=(
+       add
+       gencaches
+       showpkg
+       showsrc
+       stats
+       dump
+       dumpavail
+       unmet
+       search
+       show
+       depends
+       rdepends
+       pkgnames
+       dotty
+       xvcg
+       policy
+    )
+
+    for cmd in "${get_cmds[@]}"; do
+        if [[ $1 = $cmd ]]; then
+            sudo apt-get "$@"
+            return
+        fi
+    done
+
+    for cmd in "${cache_cmds[@]}"; do
+        if [[ $1 = $cmd ]]; then
+            apt-cache "$@"
+            return
+        fi
+    done
+
+    return 1
+}; export -f apt
+
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local
