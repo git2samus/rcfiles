@@ -24,6 +24,28 @@ rcd() {
     rmdir "$PWD" && cd ..
 }; export -f rcd
 
+retry () {
+    local delay n
+    if ! [[ $1 = *[^0-9]* ]]; then
+        # TODO allow delay=0 (prevents Ctrl-C)
+        if (($1 > 0)); then
+            delay=${1:1}
+        else
+            delay=1
+        fi
+        shift
+    else
+        delay=1
+    fi
+    while ! "$@"; do
+        echo "retrying in ${delay}s"
+        for ((n=delay; n>0; n--))
+        do
+            sleep 1 || return
+        done
+    done
+}; export -f retry
+
 mklab() {
     local d=$(mktemp -d) && cd "$d" || return 1
     clear; bash -i
