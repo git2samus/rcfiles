@@ -20,6 +20,8 @@ set mouse=a
 " enable/disable mouse support
 nmap <silent> <Leader>m :silent set mouse=a<CR>:set mouse?<CR>
 nmap <silent> <Leader>M :silent set mouse=<CR>:set mouse?<CR>
+" shortcut to check for external modifications
+nmap <silent> <Leader><CR> :checktime<CR>
 
 
 " enable statusbar
@@ -72,8 +74,8 @@ set listchars=tab:-\ ,trail:_,precedes:<,extends:>
 " tab and indent width
 set softtabstop=4
 set shiftwidth=4
-" shorter for markup files
-au FileType {xml,xhtml,html{,django},yaml} setlocal sw=2 sts=2
+" exceptions
+au FileType {xml,xhtml,html{,django},yaml,ruby} setlocal sw=2 sts=2
 
 " autofold
 set foldmethod=indent
@@ -143,3 +145,4 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
                   \ | wincmd p | diffthis
 endif
+
