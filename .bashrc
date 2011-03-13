@@ -13,3 +13,6 @@ else
 fi
 
 [[ -r ~/.bashrc_local ]] && . ~/.bashrc_local
+
+# ruby version manager
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
