@@ -125,7 +125,7 @@ if hash apt-get >/dev/null 2>&1; then
 
         for get_cmd in "${get_cmds[@]}"; do
             if [[ $cmd = $get_cmd ]]; then
-                apt-get "$cmd" "$@"; return
+                sudo apt-get "$cmd" "$@"; return
             fi
         done
 
