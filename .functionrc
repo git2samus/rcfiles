@@ -116,58 +116,35 @@ rscreen() {
     fi
 }; export -f rscreen
 
-# stupid wrapper for supid debian-like machines
-apt() {
-    local get_cmds=(
-       update
-       upgrade
-       install
-       remove
-       autoremove
-       purge
-       source
-       build-dep
-       dist-upgrade
-       dselect-upgrade
-       clean
-       autoclean
-       check
-    )
+# stupid wrapper for stupid debian-like systems
+if hash apt-get >/dev/null 2>&1; then
+    apt() {
+        local sed_expr='/Commands:/,/^$/{//d;s/^ *\([^ ]\+\).*/\1/p;}'
+        local get_cmds=($(apt-get | sed -n "$sed_expr")) cache_cmds=($(apt-cache | sed -n "$sed_expr"))
+        local cmd=$1; shift
 
-    local cache_cmds=(
-       add
-       gencaches
-       showpkg
-       showsrc
-       stats
-       dump
-       dumpavail
-       unmet
-       search
-       show
-       depends
-       rdepends
-       pkgnames
-       dotty
-       xvcg
-       policy
-    )
+        for get_cmd in "${get_cmds[@]}"; do
+            if [[ $cmd = $get_cmd ]]; then
+                apt-get "$cmd" "$@"; return
+            fi
+        done
 
-    for cmd in "${get_cmds[@]}"; do
-        if [[ $1 = $cmd ]]; then
-            sudo apt-get "$@"
-            return
-        fi
-    done
+        for cache_cmd in "${cache_cmds[@]}"; do
+            if [[ $cmd = $cache_cmd ]]; then
+                apt-cache "$cmd" "$@"; return
+            fi
+        done
 
-    for cmd in "${cache_cmds[@]}"; do
-        if [[ $1 = $cmd ]]; then
-            apt-cache "$@"
-            return
-        fi
-    done
+        echo "Unkown command: $cmd"
+        echo
+        echo "Commands (apt-get):"
+        printf "   %s\n" "${get_cmds[@]}"
+        echo
+        echo "Commands (apt-cache):"
+        printf "   %s\n" "${cache_cmds[@]}"
 
-    return 1
-}; export -f apt
+        return 1
+    }; export -f apt
+fi
 
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local
