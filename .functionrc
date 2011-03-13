@@ -135,7 +135,7 @@ if hash apt-get >/dev/null 2>&1; then
             fi
         done
 
-        echo "Unkown command: $cmd"
+        echo "Unknown command: $cmd"
         echo
         echo "Commands (apt-get):"
         printf "   %s\n" "${get_cmds[@]}"
