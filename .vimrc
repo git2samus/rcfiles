@@ -6,7 +6,7 @@ set hidden
 set modeline
 
 " http://weevilgenius.net/2010/10/vim-tip-relocating-vim-swapfiles/
-set dir^=/tmp//
+set dir^=~/.vim/swp//
 
 " enable syntax highlight
 syntax on
@@ -26,14 +26,12 @@ nmap <silent> <Leader><CR> :checktime<CR>
 
 " enable statusbar
 set laststatus=2
-" TODO make this conditional
-" set statusline=%<%f\ %{&paste?'(p)\ ':''}%{GitBranch()}%h%m%r%=%-14.(%l,%c%V%)\ %P
 set statusline=%<%f\ %{&paste?'(p)\ ':''}%h%m%r%=%-14.(%l,%c%V%)\ %P
 " enable wildmenu for tab-completion
 set wildmenu
 " configure wildmenu to behave more like bash
 set wildmode=longest:full
-" avoid trying to open python bytecode
+" avoid to open python bytecode
 set wildignore=*.py[co]
 
 " show line numbers in statusbar
@@ -67,8 +65,9 @@ set expandtab
 " swap tabs/spaces
 nmap <silent> <Leader>t :silent set expandtab!<CR>:if &expandtab<CR>:set softtabstop=4<CR>:set shiftwidth=4<CR>:else<CR>:let &softtabstop=&tabstop<CR>:let &shiftwidth=&tabstop<CR>:endif<CR>:set expandtab?<CR>
 
-" show tabs as blank-padded arrows, trailing spaces as middle-dots
+" show tabs, trailing spaces and other stuff
 set list
+" avoid unicode to prevent issues with PuTTY
 set listchars=tab:-\ ,trail:_,precedes:<,extends:>
 
 " tab and indent width
@@ -99,7 +98,7 @@ nmap # #Nzz
 " swap search highlight
 nmap <silent> <Leader><Leader> :nohlsearch<CR>
 nmap <silent> <Leader>h :silent set hlsearch!<CR>:set hlsearch?<CR>
-" swap case-insensitive search and show current state
+" swap case-insensitive search
 nmap <silent> <Leader>i :silent set ignorecase!<CR>:set ignorecase?<CR>
 
 " shortcuts to change buffers the same way as tabs
@@ -114,17 +113,15 @@ nmap <silent> <Leader>s :silent s/\s\+$<CR>
 " TODO avoid changing the search pattern and highlighting
 nmap <silent> <Leader>S :let _pos = getpos(".")<CR>:silent keepjumps %s/\s\+$//e<CR>:call setpos(".", _pos)<CR>
 
-" avoid using escape to exit inster mode (<Leader> uses two keystrokes)
+" avoid using escape to exit insert mode (Ctrl-J is default)
 imap <CR> <ESC>
 imap <C-CR> <CR>
+
+" use system registry by default
+set clipboard=unnamed
 " swap paste mode and force screen refresh to play nice with statusline flag
 set pastetoggle=<F12>
 map <F12> <F12>
-
-" copy/paste shortcuts
-nmap <silent> <Leader>x "+x
-nmap <silent> <Leader>c "+y
-nmap <silent> <Leader>v "+gP
 
 
 " taken from /etc/vimrc
