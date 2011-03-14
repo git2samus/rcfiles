@@ -1,3 +1,5 @@
+" vim behavior "
+
 " disable vi compatibility
 set nocompatible
 " allow to change buffers without saving them
@@ -12,8 +14,8 @@ set dir^=~/.vim/swp//
 syntax on
 " enable filetype-specific features
 filetype plugin indent on
-" readable colours on dark background
-colorscheme desert
+" autofold
+set foldmethod=indent
 
 " enable mouse by default
 set mouse=a
@@ -23,6 +25,45 @@ nmap <silent> <Leader>M :silent set mouse=<CR>:set mouse?<CR>
 " shortcut to check for external modifications
 nmap <silent> <Leader><CR> :checktime<CR>
 
+
+" avoid messing with the screen
+set nowrap
+" switch line wrap
+nmap <silent> <Leader>w :silent set wrap!<CR>:set wrap?<CR>
+
+" keep some context when moving
+set scrolloff=1
+set sidescrolloff=5
+
+
+" enable search highlighting
+set hlsearch
+" enable incremental search
+set incsearch
+" case-sensitive search
+set noignorecase
+set nosmartcase
+
+" swap search highlight
+nmap <silent> <Leader><Leader> :nohlsearch<CR>
+nmap <silent> <Leader>h :silent set hlsearch!<CR>:set hlsearch?<CR>
+" swap case-insensitive search
+nmap <silent> <Leader>i :silent set ignorecase!<CR>:set ignorecase?<CR>
+
+
+" clipboard "
+
+" use system registry by default
+set clipboard=unnamed
+" swap paste-mode and force screen refresh to play nice with statusline flag
+set pastetoggle=<F12>
+map <F12> <F12>
+
+
+" appearance "
+
+" readable colors on dark background
+colorscheme desert
 
 " enable statusbar
 set laststatus=2
@@ -48,17 +89,9 @@ nmap <silent> <Leader>d :sign unplace<CR>
 nmap <silent> <Leader>D :sign unplace *<CR>
 
 
-" avoid messing with the screen
-set nowrap
-" switch line wrap
-nmap <silent> <Leader>w :silent set wrap!<CR>:set wrap?<CR>
+" whitespace and indentation "
 
-" keep some context when moving
-set scrolloff=1
-set sidescrolloff=5
-
-
-" allow backspacing over everything in insert mode
+" allow backspacing over everything in insert-mode
 set backspace=indent,eol,start
 " insert spaces by default
 set expandtab
@@ -70,36 +103,23 @@ set list
 " avoid unicode to prevent issues with PuTTY
 set listchars=tab:-\ ,trail:_,precedes:<,extends:>
 
+" remove trailing spaces on the current line
+nmap <silent> <Leader>s :silent s/\s\+$<CR>
+" remove trailing spaces on entire buffer without altering the cursor position
+" TODO avoid changing the search pattern and highlighting
+nmap <silent> <Leader>S :let _pos = getpos(".")<CR>:silent keepjumps %s/\s\+$//e<CR>:call setpos(".", _pos)<CR>
+
 " tab and indent width
 set softtabstop=4
 set shiftwidth=4
 " exceptions
 au FileType {xml,xhtml,html{,django},yaml,ruby} setlocal sw=2 sts=2
 
-" autofold
-set foldmethod=indent
 
-
-" enable search highlighting
-set hlsearch
-" enable incremental search
-set incsearch
-" case-sensitive search
-set noignorecase
-set nosmartcase
+" helpful remappings "
 
 " mimic D
 nmap Y y$
-
-" do not move the cursor when highlighting
-nmap * *Nzz
-nmap # #Nzz
-
-" swap search highlight
-nmap <silent> <Leader><Leader> :nohlsearch<CR>
-nmap <silent> <Leader>h :silent set hlsearch!<CR>:set hlsearch?<CR>
-" swap case-insensitive search
-nmap <silent> <Leader>i :silent set ignorecase!<CR>:set ignorecase?<CR>
 
 " shortcuts to change buffers the same way as tabs
 nmap gb :bn<CR>
@@ -107,22 +127,13 @@ nmap gB :bp<CR>
 " and to previous buffer
 nmap g. :b#<CR>
 
-" remove trailing spaces on the current line
-nmap <silent> <Leader>s :silent s/\s\+$<CR>
-" remove trailing spaces on entire buffer without altering the cursor position
-" TODO avoid changing the search pattern and highlighting
-nmap <silent> <Leader>S :let _pos = getpos(".")<CR>:silent keepjumps %s/\s\+$//e<CR>:call setpos(".", _pos)<CR>
+" do not move the cursor when highlighting
+" TODO find a more elegant way to do this :P
+nmap * *Nzz
+nmap # #Nzz
 
-" avoid using escape to exit insert mode (Ctrl-J is default)
-imap <CR> <ESC>
-imap <C-CR> <CR>
 
-" use system registry by default
-set clipboard=unnamed
-" swap paste mode and force screen refresh to play nice with statusline flag
-set pastetoggle=<F12>
-map <F12> <F12>
-
+" extras "
 
 " taken from /etc/vimrc
 " Only do this part when compiled with support for autocommands
