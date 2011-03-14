@@ -1,22 +1,5 @@
 # vim: set filetype=sh :
 
-xterm_prompt() {
-    # adapted from ArhLinux /etc/bash.bashrc
-    if test "$TERM" = "xterm" -o \
-            "$TERM" = "xterm-color" -o \
-            "$TERM" = "xterm-256color" -o \
-            "$TERM" = "rxvt" -o \
-            "$TERM" = "rxvt-unicode" -o \
-            "$TERM" = "xterm-xfree86"; then
-        local k keys prompt_path="${PWD/$HOME/~}"
-        OLDIFS=$IFS IFS=/ prompt_path=($prompt_path) IFS=$OLDIFS
-        keys=("${!prompt_path[@]}")
-        for k in "${keys[@]:0:${#keys[@]}-1}"; do prompt_path[$k]=${prompt_path[$k]:0:1}; done
-        if ((${#prompt_path[@]} == 1)); then [[ ${prompt_path[0]} ]] || prompt_path[0]=/; fi
-        echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:$(list_join / "${prompt_path[@]}")\007"
-    fi
-}; export -f xterm_prompt
-
 mcd() {
     mkdir "$1" && cd "$1"
 }; export -f mcd

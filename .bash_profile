@@ -1,5 +1,5 @@
 export HISTSIZE=10000 HISTCONTROL=erasedups HISTIGNORE=[bf]g:jobs:clear:exit
-export PROMPT_COMMAND='unset HISTFILESIZE; history -a; xterm_prompt'
+export PROMPT_COMMAND='unset HISTFILESIZE; history -a'
 export PROMPT_DIRTRIM=2
 export CDPATH=.:~
 export EDITOR=vim
