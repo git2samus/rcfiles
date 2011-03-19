@@ -110,10 +110,10 @@ nmap <silent> <Leader>s :silent s/\s\+$<CR>
 nmap <silent> <Leader>S :let _pos = getpos(".")<CR>:silent keepjumps %s/\s\+$//e<CR>:call setpos(".", _pos)<CR>
 
 " tab and indent width
-set softtabstop=4
-set shiftwidth=4
+set softtabstop=2
+set shiftwidth=2
 " exceptions
-au FileType {xml,xhtml,html{,django},yaml,ruby} setlocal sw=2 sts=2
+au FileType python,php setlocal sw=4 sts=4
 
 
 " helpful remappings "
