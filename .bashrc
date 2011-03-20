@@ -2,6 +2,7 @@ if [[ $- = *i* ]]; then
     shopt -s extglob failglob histappend checkwinsize
     ((${BASH_VERSINFO[0]} >= 4)) && shopt -s globstar
 
+    set -o vi
     bind -x '"\C-\M-l":kill -WINCH $$' # TODO shouldn't this be on .inputrc?
 
     if [[ -r ~/.gitsh ]]; then
