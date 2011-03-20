@@ -1,132 +1,131 @@
 # vim: set filetype=sh :
 
 mcd() {
-    mkdir "$1" && cd "$1"
+  mkdir "$1" && cd "$1"
 }; export -f mcd
 rcd() {
-    rmdir "$PWD" && cd ..
+  rmdir "$PWD" && cd ..
 }; export -f rcd
 
 retry () {
-    local delay=1 n
-    if ! [[ $1 = *[^0-9]* ]]; then
-        # TODO allow delay=0 (prevents Ctrl-C)
-        if (($1 > 0)); then
-            delay=${1:1}
-        fi
-        shift
+  local delay=1 n
+  if ! [[ $1 = *[^0-9]* ]]; then
+    # TODO allow delay=0 (prevents Ctrl-C)
+    if (($1 > 0)); then
+      delay=${1:1}
     fi
+    shift
+  fi
 
-    # run command
-    while ! "$@"; do
-        echo "retrying in ${delay}s"
-        for ((n=delay; n>0; n--))
-        do
-            sleep 1 || return
-        done
+  # run command
+  while ! "$@"; do
+    echo "retrying in ${delay}s"
+    for ((n=delay; n>0; n--)); do
+      sleep 1 || return
     done
+  done
 }; export -f retry
 
 mklab() {
-    # creates small test environments for scripting
-    local d=$(mktemp -d) && cd "$d" || return 1
-    clear; bash --login --noprofile
-    find "$d" -delete && cd -
+  # creates small test environments for scripting
+  local d=$(mktemp -d) && cd "$d" || return 1
+  clear; bash --login --noprofile
+  find "$d" -delete && cd -
 }; export -f mklab
 
 list_join() {
-    local OLDIFS=$IFS
-    IFS=${1:?"Missing separator"}
-    echo "${*:2}"
-    IFS=$OLDIFS
+  local OLDIFS=$IFS
+  IFS=${1:?"Missing separator"}
+  echo "${*:2}"
+  IFS=$OLDIFS
 }; export -f list_join
 nl_join() {
-    list_join $'\n' "$@"
+  list_join $'\n' "$@"
 }; export -f nl_join
 
 filter_uniq() {
-    awk '!a[$0]++'
+  awk '!a[$0]++'
 }; export -f filter_uniq
 
 hvim() {
-    local h=$1; shift
-    vim -c ":h $h | bd1 | normal zt" "$@"
+  local h=$1; shift
+  vim -c ":h $h | bd1 | normal zt" "$@"
 }; export -f hvim
 
 svim() {
-    local parent session branch a target
-    if [[ $1 = git ]]; then
-        shift
-        branch=$(git rev-parse --abbrev-ref HEAD)
-    fi
+  local parent session branch a target
+  if [[ $1 = git ]]; then
+    shift
+    branch=$(git rev-parse --abbrev-ref HEAD)
+  fi
 
-    parent=${PWD%/*}
-    session=${PWD##*/}_${parent##*/}${branch:+:$branch}
+  parent=${PWD%/*}
+  session=${PWD##*/}_${parent##*/}${branch:+:$branch}
 
-    if [[ $1 = ++ ]]; then
-        shift
-        # TODO allow to run in a different dir other than .
-        target=.
-        a=(); while IFS= read -r -d '' file; do
-            a+=("$file")
-        done < <(find "$target" -type f \( -empty -o -exec fgrep -qI '' {} \; \) -print0 | sort -z)
-        vim -c "chdir $target | $(printf 'SessionSaveAs %q' "$session")" "$@" -- "${a[@]}"
-    elif [[ $1 = + ]]; then
-        shift
-        vim -c "$(printf 'SessionSaveAs %q' "$session")" "$@"
-    else
-        vim -c "$(printf 'SessionOpen %q' "$session")" "$@"
-    fi
+  if [[ $1 = ++ ]]; then
+    shift
+    # TODO allow to run in a different dir other than .
+    target=.
+    a=(); while IFS= read -r -d '' file; do
+    a+=("$file")
+  done < <(find "$target" -type f \( -empty -o -exec fgrep -qI '' {} \; \) -print0 | sort -z)
+  vim -c "chdir $target | $(printf 'SessionSaveAs %q' "$session")" "$@" -- "${a[@]}"
+elif [[ $1 = + ]]; then
+  shift
+  vim -c "$(printf 'SessionSaveAs %q' "$session")" "$@"
+else
+  vim -c "$(printf 'SessionOpen %q' "$session")" "$@"
+fi
 }; export -f svim
 
 git_track() {
-    local remote=${1:?'missing remote'} branch=${2:?'missing branch'}
-    if [[ $3 ]]; then local git_args=(config -f "$3"); else local git_args=(config); fi
-    git "${git_args[@]}" "branch.$branch.remote" "$remote" && git "${git_args[@]}" "branch.$branch.merge" "refs/heads/$branch"
-    echo "[$branch]"; while read var val; do echo "${var#branch.$branch.}=$val"; done < <(git "${git_args[@]}" --get-regexp "^branch\\.$branch\\.")
+  local remote=${1:?'missing remote'} branch=${2:?'missing branch'}
+  if [[ $3 ]]; then local git_args=(config -f "$3"); else local git_args=(config); fi
+  git "${git_args[@]}" "branch.$branch.remote" "$remote" && git "${git_args[@]}" "branch.$branch.merge" "refs/heads/$branch"
+  echo "[$branch]"; while read var val; do echo "${var#branch.$branch.}=$val"; done < <(git "${git_args[@]}" --get-regexp "^branch\\.$branch\\.")
 }; export -f git_track
 
 mkscreen() {
-    screen -S "$1" "$@"
+  screen -S "$1" "$@"
 }; export -f mkscreen
 
 rscreen() {
-    if (($#)); then
-        screen -r "$@"
-    else
-        screen -list
-    fi
+  if (($#)); then
+    screen -r "$@"
+  else
+    screen -list
+  fi
 }; export -f rscreen
 
 # stupid wrapper for stupid debian-like systems
 if hash apt-get >/dev/null 2>&1; then
-    apt() {
-        local sed_expr='/Commands:/,/^$/{//d;s/^ *\([^ ]\+\).*/\1/p;}'
-        local get_cmds=($(apt-get | sed -n "$sed_expr")) cache_cmds=($(apt-cache | sed -n "$sed_expr"))
-        local cmd=$1; shift
+  apt() {
+    local sed_expr='/Commands:/,/^$/{//d;s/^ *\([^ ]\+\).*/\1/p;}'
+    local get_cmds=($(apt-get | sed -n "$sed_expr")) cache_cmds=($(apt-cache | sed -n "$sed_expr"))
+    local cmd=$1; shift
 
-        for get_cmd in "${get_cmds[@]}"; do
-            if [[ $cmd = $get_cmd ]]; then
-                sudo apt-get "$cmd" "$@"; return
-            fi
-        done
+    for get_cmd in "${get_cmds[@]}"; do
+      if [[ $cmd = $get_cmd ]]; then
+        sudo apt-get "$cmd" "$@"; return
+      fi
+    done
 
-        for cache_cmd in "${cache_cmds[@]}"; do
-            if [[ $cmd = $cache_cmd ]]; then
-                apt-cache "$cmd" "$@"; return
-            fi
-        done
+    for cache_cmd in "${cache_cmds[@]}"; do
+      if [[ $cmd = $cache_cmd ]]; then
+        apt-cache "$cmd" "$@"; return
+      fi
+    done
 
-        echo "Unknown command: $cmd"
-        echo
-        echo "Commands (apt-get):"
-        printf "   %s\n" "${get_cmds[@]}"
-        echo
-        echo "Commands (apt-cache):"
-        printf "   %s\n" "${cache_cmds[@]}"
+    echo "Unknown command: $cmd"
+    echo
+    echo "Commands (apt-get):"
+    printf "   %s\n" "${get_cmds[@]}"
+    echo
+    echo "Commands (apt-cache):"
+    printf "   %s\n" "${cache_cmds[@]}"
 
-        return 1
-    }; export -f apt
+    return 1
+  }; export -f apt
 fi
 
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local
