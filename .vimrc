@@ -17,7 +17,7 @@ filetype plugin indent on
 " autofold
 set foldmethod=indent
 " expand folds when opening files
-au BufRead * normal zR
+au BufEnter * normal zR
 
 " enable mouse by default
 set mouse=a
