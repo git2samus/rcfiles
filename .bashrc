@@ -19,3 +19,6 @@ fi
 
 # ruby version manager
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# python's virtualenv (for when invoked from screen)
+[[ -r bin/activate ]] && . bin/activate
