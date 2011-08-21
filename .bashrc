@@ -2,8 +2,8 @@ if [[ $- = *i* ]]; then
   shopt -s extglob failglob histappend checkwinsize
   ((${BASH_VERSINFO[0]} >= 4)) && shopt -s globstar
 
-  set -o vi
-  bind -x '"\C-\M-l":kill -WINCH $$' # can't use -x on .inputrc
+  # TODO: make conditional based on editing-mode (note: when changing modes from .inputrc $SHELLOPTS does not recognize it)
+  # bind -x '"\C-\M-w":kill -WINCH $$';; # can't use -x on .inputrc
 
   if [[ -r ~/.gitsh ]]; then
     gitps1='$(__git_ps1)'

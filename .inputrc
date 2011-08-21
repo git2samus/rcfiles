@@ -1,2 +1,7 @@
+set editing-mode vi
+
+# put these below editing-mode to avoid the reset
 "\e[5~": history-search-backward
 "\e[6~": history-search-forward
+
+# TODO: shell-expand-glob in vi mode
