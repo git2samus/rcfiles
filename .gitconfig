@@ -1,0 +1,11 @@
+[user]
+	name = Samus_
+	email = mail2samus@gmail.com
+[color]
+	ui = auto
+[rerere]
+	enabled = true
+[alias]
+	amend = commit --amend -C HEAD
+[push]
+	default = upstream
