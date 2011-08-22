@@ -128,4 +128,14 @@ if hash apt-get >/dev/null 2>&1; then
   }; export -f apt
 fi
 
+jobs_prompt() {
+  local a running_jobs stopped_jobs
+  a=($(jobs -pr)); [[ $a ]] && running_jobs=${#a[@]}
+  a=($(jobs -ps)); [[ $a ]] && stopped_jobs=${#a[@]}
+  if [[ $running_jobs || $stopped_jobs ]]; then
+    if [[ $running_jobs && $stopped_jobs ]]; then a=+; else a=; fi
+    echo "(${running_jobs:+${running_jobs}r}$a${stopped_jobs:+${stopped_jobs}s})& "
+  fi
+}; export -f jobs_prompt
+
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local
