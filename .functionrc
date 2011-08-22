@@ -43,6 +43,22 @@ nl_join() {
   list_join $'\n' "$@"
 }; export -f nl_join
 
+rfind() {
+  # reverse find
+  local target="$1" cwd="$PWD"
+
+  [[ "$target" ]] || { echo "ERROR: missing target" >&2; return 1; }
+
+  while [[ "$cwd" ]]; do
+    if [[ -e "$cwd"/"$target" ]]; then
+      echo "$cwd"/"$target"
+      return 0
+    fi
+    cwd="${cwd%/*}"
+  done
+  return 1
+}; export -f rfind
+
 filter_uniq() {
   awk '!a[$0]++'
 }; export -f filter_uniq
