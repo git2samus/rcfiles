@@ -60,6 +60,8 @@ set clipboard=unnamed
 " swap paste-mode and force screen refresh to play nice with statusline flag
 set pastetoggle=<F12>
 map <F12> <F12>
+" alternate mapping using Leader for when <F12> is unavailable
+nmap <silent> <Leader>p :silent set paste!<CR>
 
 
 " appearance "
