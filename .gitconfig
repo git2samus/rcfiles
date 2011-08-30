@@ -8,4 +8,4 @@
 [alias]
 	amend = commit --amend -C HEAD
 [push]
-	default = upstream
+	default = tracking
