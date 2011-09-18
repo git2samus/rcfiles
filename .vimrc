@@ -143,22 +143,6 @@ nmap # #Nzz
 imap   <CR> <ESC>
 imap <C-CR> <CR>
 
-" use arrows to navigate split-windows
-map  <Up>    <C-w>k
-map  <Down>  <C-w>j
-map  <Left>  <C-w>h
-map  <Right> <C-w>l
-imap <Up>    <ESC><C-w>k
-imap <Down>  <ESC><C-w>j
-imap <Left>  <ESC><C-w>h
-imap <Right> <ESC><C-w>l
-
-" use PgUp/PgDown to navigate tabs (Ctrl-D/Ctrl-U are defaults)
-map  <PageUp>   gT
-map  <PageDown> gt
-imap <PageUp>   <ESC>gT
-imap <PageDown> <ESC>gt
-
 
 " extras "
 
