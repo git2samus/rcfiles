@@ -7,6 +7,10 @@ rcd() {
   rmdir "$PWD" && cd ..
 }; export -f rcd
 
+within() (
+  cd "$1" && shift && "$@"
+); export -f within
+
 retry () {
   local delay=1 n
   if ! [[ $1 = *[^0-9]* ]]; then
