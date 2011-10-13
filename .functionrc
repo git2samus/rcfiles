@@ -64,7 +64,7 @@ rfind() {
 }; export -f rfind
 
 filter_uniq() {
-  awk '!a[$0]++'
+  awk '!a[$0]++' "$@"
 }; export -f filter_uniq
 
 hvim() {
