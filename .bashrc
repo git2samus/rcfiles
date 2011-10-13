@@ -27,4 +27,9 @@ fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # python's virtualenv (for when invoked from screen)
-[[ -r bin/activate ]] && . bin/activate
+[[ -z $VIRTUALENV_HOME ]] && if VIRTUALENV_HOME=$(rfind bin/activate); then
+  source $VIRTUALENV_HOME
+  export VIRTUALENV_HOME=${VIRTUALENV_HOME%/bin/activate}
+else
+  unset VIRTUALENV_HOME
+fi
