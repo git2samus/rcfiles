@@ -143,6 +143,12 @@ nmap # #Nzz
 imap   <CR> <ESC>
 imap <C-CR> <CR>
 
+" use arrows to navigate split-windows
+nmap  <Up>    <C-w>k
+nmap  <Down>  <C-w>j
+nmap  <Left>  <C-w>h
+nmap  <Right> <C-w>l
+
 
 " extras "
 
