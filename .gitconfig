@@ -9,3 +9,5 @@
 	amend = commit --amend -C HEAD
 [push]
 	default = tracking
+[merge]
+	tool = vimdiff
