@@ -7,6 +7,7 @@ export CDPATH=.:~:~/dev
 export PATH=$HOME/bin${PATH:+:$PATH}
 
 
+[[ -r ~/.git-completion.bash ]] && . ~/.git-completion.bash
 [[ -r ~/.functionrc ]] && . ~/.functionrc
 [[ -r ~/.bashrc ]] && . ~/.bashrc
 
