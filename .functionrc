@@ -13,6 +13,7 @@ within() (
 
 retry () {
   local delay=1 n
+
   if ! [[ $1 = *[^0-9]* ]]; then
     # TODO allow delay=0 (prevents Ctrl-C)
     if (($1 > 0)); then
@@ -29,6 +30,18 @@ retry () {
     done
   done
 }; export -f retry
+
+chain() {
+  local prefix=("$@")
+  local cmd raw_cmd raw_cmds=()
+
+  # you're not allowed to do this... but I do.
+  while read -r raw_cmd; do
+    raw_cmds+=("$raw_cmd")
+  done && for raw_cmd in "${raw_cmds[@]}"; do
+    eval "cmd=($raw_cmd)" && "${prefix[@]}" "${cmd[@]}" || break # cookies...
+  done
+}; export -f chain
 
 mklab() {
   # creates small test environments for scripting
