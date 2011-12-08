@@ -66,12 +66,16 @@ rfind() {
 
   [[ "$target" ]] || { echo "ERROR: missing target" >&2; return 1; }
 
-  while [[ "$cwd" ]]; do
+  while true; do
     if [[ -e "$cwd"/"$target" ]]; then
       echo "$cwd"/"$target"
       return 0
     fi
-    cwd="${cwd%/*}"
+    if [[ "$cwd" ]]; then
+      cwd="${cwd%/*}"
+    else
+      break
+    fi
   done
   return 1
 }; export -f rfind
