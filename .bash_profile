@@ -7,6 +7,8 @@ export CDPATH=.:~:~/dev
 export PATH=$HOME/bin${PATH:+:$PATH}
 
 
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
+
 [[ -r ~/.git-completion.bash ]] && . ~/.git-completion.bash
 [[ -r ~/.functionrc ]] && . ~/.functionrc
 [[ -r ~/.bashrc ]] && . ~/.bashrc

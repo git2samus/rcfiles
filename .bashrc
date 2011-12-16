@@ -23,9 +23,6 @@ fi
 
 [[ -r ~/.bashrc_local ]] && . ~/.bashrc_local
 
-# ruby version manager
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
 # python's virtualenv (for when invoked from screen)
 [[ -z $VIRTUALENV_HOME ]] && if VIRTUALENV_HOME=$(rfind bin/activate); then
   source $VIRTUALENV_HOME
