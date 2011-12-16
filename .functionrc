@@ -7,6 +7,12 @@ rcd() {
   rmdir "$PWD" && cd ..
 }; export -f rcd
 
+# test for glob existance (use with literals, like: exists '*')
+exists() (
+  shopt -s nullglob dotglob; shopt -u failglob
+  a=($1); [[ ${a##*/} != . && ${a##*/} != .. && -e $a ]] && return
+); export -f exists
+
 # in-place file redirection
 with() {
   local input=$1 output; shift
