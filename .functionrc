@@ -7,6 +7,15 @@ rcd() {
   rmdir "$PWD" && cd ..
 }; export -f rcd
 
+# check if first argument appears among the rest
+# for use with arrays, like: in_array "$var" "${arr[@]}"
+in_array() {
+    local needle=$1; shift
+    for arg; do
+        [[ $arg = $needle ]] && return
+    done; return 1
+}
+
 # test for glob existance (use with literals, like: exists '*')
 exists() (
   shopt -s nullglob dotglob; shopt -u failglob
