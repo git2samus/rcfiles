@@ -1,10 +1,10 @@
 # vim: set filetype=sh :
 
 mcd() {
-  mkdir "$1" && cd "$1"
+    mkdir "$1" && cd "$1"
 }; export -f mcd
 rcd() {
-  rmdir "$PWD" && cd ..
+    rmdir "$PWD" && cd ..
 }; export -f rcd
 
 # check if first argument appears among the rest
@@ -18,188 +18,188 @@ in_array() {
 
 # test for glob existance (use with literals, like: exists '*')
 exists() (
-  shopt -s nullglob dotglob; shopt -u failglob
-  a=($1); [[ ${a##*/} != . && ${a##*/} != .. && -e $a ]] && return
+    shopt -s nullglob dotglob; shopt -u failglob
+    a=($1); [[ ${a##*/} != . && ${a##*/} != .. && -e $a ]] && return
 ); export -f exists
 
 # in-place file redirection
 with() {
-  local input=$1 output; shift
-  if [[ -r $input ]]; then
-    echo "cannot read from input file" >&2
-    exit 1
-  fi
+    local input=$1 output; shift
+    if [[ -r $input ]]; then
+        echo "cannot read from input file" >&2
+        exit 1
+    fi
 
-  output=$(mktemp)
-  "$@" <"$input" >"$output" && mv "$output" "$input"
+    output=$(mktemp)
+    "$@" <"$input" >"$output" && mv "$output" "$input"
 }; export -f with
 
 within() (
-  cd "$1" && shift && "$@"
+    cd "$1" && shift && "$@"
 ); export -f within
 
 retry () {
-  local delay=1 n
+    local delay=1 n
 
-  if ! [[ $1 = *[^0-9]* ]]; then
-    # TODO allow delay=0 (prevents Ctrl-C)
-    if (($1 > 0)); then
-      delay=${1:1}
+    if ! [[ $1 = *[^0-9]* ]]; then
+        # TODO allow delay=0 (prevents Ctrl-C)
+        if (($1 > 0)); then
+            delay=${1:1}
+        fi
+        shift
     fi
-    shift
-  fi
 
-  # run command
-  while ! "$@"; do
-    echo "retrying in ${delay}s"
-    for ((n=delay; n>0; n--)); do
-      sleep 1 || return
+    # run command
+    while ! "$@"; do
+        echo "retrying in ${delay}s"
+        for ((n=delay; n>0; n--)); do
+            sleep 1 || return
+        done
     done
-  done
 }; export -f retry
 
 chain() {
-  local prefix=("$@")
-  local cmd raw_cmd raw_cmds=()
+    local prefix=("$@")
+    local cmd raw_cmd raw_cmds=()
 
-  # you're not allowed to do this... but I do.
-  while read -r raw_cmd; do
-    raw_cmds+=("$raw_cmd")
-  done && for raw_cmd in "${raw_cmds[@]}"; do
-    eval "cmd=($raw_cmd)" && "${prefix[@]}" "${cmd[@]}" || break # cookies...
-  done
+    # you're not allowed to do this... but I do.
+    while read -r raw_cmd; do
+        raw_cmds+=("$raw_cmd")
+    done && for raw_cmd in "${raw_cmds[@]}"; do
+        eval "cmd=($raw_cmd)" && "${prefix[@]}" "${cmd[@]}" || break # cookies...
+    done
 }; export -f chain
 
 mklab() {
-  # creates small test environments for scripting
-  local d=$(mktemp -d) && cd "$d" || return 1
-  clear; bash --login --noprofile
-  find "$d" -delete && cd -
+    # creates small test environments for scripting
+    local d=$(mktemp -d) && cd "$d" || return 1
+    clear; bash --login --noprofile
+    find "$d" -delete && cd -
 }; export -f mklab
 
 list_join() {
-  local OLDIFS=$IFS
-  IFS=${1:?"Missing separator"}
-  echo "${*:2}"
-  IFS=$OLDIFS
+    local OLDIFS=$IFS
+    IFS=${1:?"Missing separator"}
+    echo "${*:2}"
+    IFS=$OLDIFS
 }; export -f list_join
 nl_join() {
-  list_join $'\n' "$@"
+    list_join $'\n' "$@"
 }; export -f nl_join
 
 rfind() {
-  # reverse find
-  local target="$1" cwd="$PWD"
+    # reverse find
+    local target="$1" cwd="$PWD"
 
-  [[ "$target" ]] || { echo "ERROR: missing target" >&2; return 1; }
+    [[ "$target" ]] || { echo "ERROR: missing target" >&2; return 1; }
 
-  while true; do
-    if [[ -e "$cwd"/"$target" ]]; then
-      echo "$cwd"/"$target"
-      return 0
-    fi
-    if [[ "$cwd" ]]; then
-      cwd="${cwd%/*}"
-    else
-      break
-    fi
-  done
-  return 1
+    while true; do
+        if [[ -e "$cwd"/"$target" ]]; then
+            echo "$cwd"/"$target"
+            return 0
+        fi
+        if [[ "$cwd" ]]; then
+            cwd="${cwd%/*}"
+        else
+            break
+        fi
+    done
+    return 1
 }; export -f rfind
 
 filter_uniq() {
-  awk '!a[$0]++' "$@"
+    awk '!a[$0]++' "$@"
 }; export -f filter_uniq
 
 hvim() {
-  local h=$1; shift
-  vim -c ":h $h | bd1 | normal zt" "$@"
+    local h=$1; shift
+    vim -c ":h $h | bd1 | normal zt" "$@"
 }; export -f hvim
 
 svim() {
-  local parent session branch a target
-  if [[ $1 = git ]]; then
-    shift
-    branch=$(git rev-parse --abbrev-ref HEAD)
-  fi
+    local parent session branch a target
+    if [[ $1 = git ]]; then
+        shift
+        branch=$(git rev-parse --abbrev-ref HEAD)
+    fi
 
-  parent=${PWD%/*}
-  session=${PWD##*/}_${parent##*/}${branch:+:$branch}
+    parent=${PWD%/*}
+    session=${PWD##*/}_${parent##*/}${branch:+:$branch}
 
-  if [[ $1 = ++ ]]; then
-    shift
-    # TODO allow to run in a different dir other than .
-    target=.
-    a=(); while IFS= read -r -d '' file; do
-    a+=("$file")
-  done < <(find "$target" -type f \( -empty -o -exec fgrep -qI '' {} \; \) -print0 | sort -z)
-  vim -c "chdir $target | $(printf 'SessionSaveAs %q' "$session")" "$@" -- "${a[@]}"
-elif [[ $1 = + ]]; then
-  shift
-  vim -c "$(printf 'SessionSaveAs %q' "$session")" "$@"
-else
-  vim -c "$(printf 'SessionOpen %q' "$session")" "$@"
-fi
+    if [[ $1 = ++ ]]; then
+        shift
+        # TODO allow to run in a different dir other than .
+        target=.
+        a=(); while IFS= read -r -d '' file; do
+            a+=("$file")
+        done < <(find "$target" -type f \( -empty -o -exec fgrep -qI '' {} \; \) -print0 | sort -z)
+        vim -c "chdir $target | $(printf 'SessionSaveAs %q' "$session")" "$@" -- "${a[@]}"
+    elif [[ $1 = + ]]; then
+        shift
+        vim -c "$(printf 'SessionSaveAs %q' "$session")" "$@"
+    else
+        vim -c "$(printf 'SessionOpen %q' "$session")" "$@"
+    fi
 }; export -f svim
 
 git_track() {
-  local remote=${1:?'missing remote'} branch=${2:?'missing branch'}
-  if [[ $3 ]]; then local git_args=(config -f "$3"); else local git_args=(config); fi
-  git "${git_args[@]}" "branch.$branch.remote" "$remote" && git "${git_args[@]}" "branch.$branch.merge" "refs/heads/$branch"
-  echo "[$branch]"; while read var val; do echo "${var#branch.$branch.}=$val"; done < <(git "${git_args[@]}" --get-regexp "^branch\\.$branch\\.")
+    local remote=${1:?'missing remote'} branch=${2:?'missing branch'}
+    if [[ $3 ]]; then local git_args=(config -f "$3"); else local git_args=(config); fi
+    git "${git_args[@]}" "branch.$branch.remote" "$remote" && git "${git_args[@]}" "branch.$branch.merge" "refs/heads/$branch"
+    echo "[$branch]"; while read var val; do echo "${var#branch.$branch.}=$val"; done < <(git "${git_args[@]}" --get-regexp "^branch\\.$branch\\.")
 }; export -f git_track
 
 mkscreen() {
-  screen -S "$1" "$@"
+    screen -S "$1" "$@"
 }; export -f mkscreen
 
 rscreen() {
-  if (($#)); then
-    screen -r "$@"
-  else
-    screen -list
-  fi
+    if (($#)); then
+        screen -r "$@"
+    else
+        screen -list
+    fi
 }; export -f rscreen
 
 # stupid wrapper for stupid debian-like systems
 if hash apt-get >/dev/null 2>&1; then
-  apt() {
-    local sed_expr='/Commands:/,/^$/{//d;s/^ *\([^ ]\+\).*/\1/p;}'
-    local get_cmds=($(apt-get | sed -n "$sed_expr")) cache_cmds=($(apt-cache | sed -n "$sed_expr"))
-    local cmd=$1; shift
+    apt() {
+        local sed_expr='/Commands:/,/^$/{//d;s/^ *\([^ ]\+\).*/\1/p;}'
+        local get_cmds=($(apt-get | sed -n "$sed_expr")) cache_cmds=($(apt-cache | sed -n "$sed_expr"))
+        local cmd=$1; shift
 
-    for get_cmd in "${get_cmds[@]}"; do
-      if [[ $cmd = $get_cmd ]]; then
-        sudo apt-get "$cmd" "$@"; return
-      fi
-    done
+        for get_cmd in "${get_cmds[@]}"; do
+            if [[ $cmd = $get_cmd ]]; then
+                sudo apt-get "$cmd" "$@"; return
+            fi
+        done
 
-    for cache_cmd in "${cache_cmds[@]}"; do
-      if [[ $cmd = $cache_cmd ]]; then
-        apt-cache "$cmd" "$@"; return
-      fi
-    done
+        for cache_cmd in "${cache_cmds[@]}"; do
+            if [[ $cmd = $cache_cmd ]]; then
+                apt-cache "$cmd" "$@"; return
+            fi
+        done
 
-    echo "Unknown command: $cmd"
-    echo
-    echo "Commands (apt-get):"
-    printf "   %s\n" "${get_cmds[@]}"
-    echo
-    echo "Commands (apt-cache):"
-    printf "   %s\n" "${cache_cmds[@]}"
+        echo "Unknown command: $cmd"
+        echo
+        echo "Commands (apt-get):"
+        printf "   %s\n" "${get_cmds[@]}"
+        echo
+        echo "Commands (apt-cache):"
+        printf "   %s\n" "${cache_cmds[@]}"
 
-    return 1
-  }; export -f apt
+        return 1
+    }; export -f apt
 fi
 
 jobs_prompt() {
-  local a running_jobs stopped_jobs
-  a=($(jobs -pr)); [[ $a ]] && running_jobs=${#a[@]}
-  a=($(jobs -ps)); [[ $a ]] && stopped_jobs=${#a[@]}
-  if [[ $running_jobs || $stopped_jobs ]]; then
-    if [[ $running_jobs && $stopped_jobs ]]; then a=+; else a=; fi
-    echo "(${running_jobs:+${running_jobs}r}$a${stopped_jobs:+${stopped_jobs}s})& "
-  fi
+    local a running_jobs stopped_jobs
+    a=($(jobs -pr)); [[ $a ]] && running_jobs=${#a[@]}
+    a=($(jobs -ps)); [[ $a ]] && stopped_jobs=${#a[@]}
+    if [[ $running_jobs || $stopped_jobs ]]; then
+        if [[ $running_jobs && $stopped_jobs ]]; then a=+; else a=; fi
+        echo "(${running_jobs:+${running_jobs}r}$a${stopped_jobs:+${stopped_jobs}s})& "
+    fi
 }; export -f jobs_prompt
 
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local
