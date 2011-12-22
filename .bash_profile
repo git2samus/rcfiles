@@ -6,10 +6,7 @@ export VISUAL=$EDITOR
 export CDPATH=.:~:~/dev
 export PATH=$HOME/bin${PATH:+:$PATH}
 
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
-
-[[ -r ~/.git-completion.bash ]] && . ~/.git-completion.bash
+[[ -r ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
 [[ -r ~/.functionrc ]] && . ~/.functionrc
 [[ -r ~/.bashrc ]] && . ~/.bashrc
 

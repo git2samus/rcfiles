@@ -5,6 +5,9 @@ if [[ $- = *i* ]]; then
   # TODO: make conditional based on editing-mode (note: when changing modes from .inputrc $SHELLOPTS does not recognize it)
   # bind -x '"\C-\M-w":kill -WINCH $$';; # can't use -x on .inputrc
 
+  # put these here instead of .bash_profile due to issues with screen
+  [[ -r ~/.git-completion.bash ]] && . ~/.git-completion.bash
+
   # detect git-aware prompt function
   if [[ $(type -t __git_ps1) = function ]]; then
     gitps1='$(__git_ps1)'
