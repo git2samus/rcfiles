@@ -117,7 +117,7 @@ nmap <silent> <Leader>S :let _pos = getpos(".")<CR>:silent keepjumps %s/\s\+$//e
 set softtabstop=4
 set shiftwidth=4
 " exceptions
-au FileType ruby setlocal sw=2 sts=2
+au FileType ruby,html{,django} setlocal sw=2 sts=2
 
 
 " helpful remappings "
@@ -140,8 +140,9 @@ nmap # #Nzz
 " vim zen "
 
 " avoid using escape to exit insert-mode (Ctrl-J is default)
-imap   <CR> <ESC>
-imap <C-CR> <CR>
+imap <CR> <ESC>
+" space in normal-mode saves all (modified) files
+nmap <Space> :wa<CR>
 
 " use arrows to navigate split-windows
 nmap  <Up>    <C-w>k
