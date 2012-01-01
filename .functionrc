@@ -38,7 +38,7 @@ within() (
     cd "$1" && shift && "$@"
 ); export -f within
 
-retry () {
+retry() {
     local delay=1 n
 
     if ! [[ $1 = *[^0-9]* ]]; then
@@ -73,8 +73,8 @@ chain() {
 mklab() {
     # creates small test environments for scripting
     local d=$(mktemp -d) && cd "$d" || return 1
-    clear; bash --login --noprofile
-    find "$d" -delete && cd -
+    clear; bash --login --noprofile --norc
+    cd - && rm -r "$d"
 }; export -f mklab
 
 list_join() {
