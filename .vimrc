@@ -140,9 +140,9 @@ nmap # #Nzz
 " vim zen "
 
 " avoid using escape to exit insert-mode (Ctrl-J is default)
-imap <CR> <ESC>
+inoremap <CR> <ESC>
 " space in normal-mode saves all (modified) files
-nmap <Space> :wa<CR>
+nnoremap <Space> :wa<CR>
 
 " use arrows to navigate split-windows
 nmap  <Up>    <C-w>k
