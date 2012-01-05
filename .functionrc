@@ -86,6 +86,9 @@ list_join() {
 nl_join() {
     list_join $'\n' "$@"
 }; export -f nl_join
+colon_join() {
+    list_join : "$@"
+}; export -f colon_join
 
 rfind() {
     # reverse find
