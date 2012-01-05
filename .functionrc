@@ -10,7 +10,7 @@ rcd() {
 # check if first argument appears among the rest
 # for use with arrays, like: in_array "$var" "${arr[@]}"
 in_array() {
-    local needle=$1; shift
+    local needle=${1:?missing needle}; shift
     for arg; do
         [[ $arg = $needle ]] && return
     done; return 1
