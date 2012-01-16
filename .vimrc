@@ -117,7 +117,7 @@ nmap <silent> <Leader>S :let _pos = getpos(".")<CR>:silent keepjumps %s/\s\+$//e
 set softtabstop=4
 set shiftwidth=4
 " exceptions
-au FileType ruby,html{,django} setlocal sw=2 sts=2
+au FileType ruby,html{,django},xml setlocal sw=2 sts=2
 
 
 " helpful remappings "
