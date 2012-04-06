@@ -96,8 +96,6 @@ nmap <silent> <Leader>D :sign unplace *<CR>
 set backspace=indent,eol,start
 " insert spaces by default
 set expandtab
-" swap tabs/spaces
-nmap <silent> <Leader>t :silent set expandtab!<CR>:if &expandtab<CR>:set softtabstop=4<CR>:set shiftwidth=4<CR>:else<CR>:let &softtabstop=&tabstop<CR>:let &shiftwidth=&tabstop<CR>:endif<CR>:set expandtab?<CR>
 
 " show tabs, trailing spaces and other stuff
 set list
@@ -116,6 +114,9 @@ set shiftwidth=4
 " exceptions
 au FileType ruby,html{,django},xml setlocal sw=2 sts=2
 
+" special mode for test files
+nmap <Leader>t :setlocal wrap<CR>:setlocal noline<CR>:setlocal linebreak<CR>
+nmap <Leader>T :setlocal nowrap<CR>:setlocal line<CR>:setlocal nolinebreak<CR>
 
 " helpful remappings "
 
