@@ -14,7 +14,7 @@ in_array() {
     for arg; do
         [[ $arg = $needle ]] && return
     done; return 1
-}
+}; export -f in_array
 
 # test for glob existance (use with literals, like: exists '*')
 exists() (
@@ -83,12 +83,14 @@ list_join() {
     echo "${*:2}"
     IFS=$OLDIFS
 }; export -f list_join
+# shortcuts (newline-join, colon-join)
 nl_join() {
     list_join $'\n' "$@"
 }; export -f nl_join
-colon_join() {
+
+cl_join() {
     list_join : "$@"
-}; export -f colon_join
+}; export -f cl_join
 
 rfind() {
     # reverse find
