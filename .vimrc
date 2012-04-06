@@ -115,8 +115,8 @@ set shiftwidth=4
 au FileType ruby,html{,django},xml setlocal sw=2 sts=2
 
 " special mode for test files
-nmap <Leader>t :setlocal wrap<CR>:setlocal noline<CR>:setlocal linebreak<CR>
-nmap <Leader>T :setlocal nowrap<CR>:setlocal line<CR>:setlocal nolinebreak<CR>
+nmap <Leader>t :setlocal wrap<CR>:setlocal nolist<CR>:setlocal linebreak<CR>
+nmap <Leader>T :setlocal nowrap<CR>:setlocal list<CR>:setlocal nolinebreak<CR>
 
 " helpful remappings "
 
