@@ -138,6 +138,8 @@ nmap # #Nzz
 
 " avoid using escape to exit insert-mode (Ctrl-J is default)
 inoremap <CR> <ESC>
+" use enter to add empty lines in normal mode
+nnoremap <CR> o<ESC>
 " space in normal-mode saves all (modified) files
 nnoremap <Space> :wa<CR>
 
