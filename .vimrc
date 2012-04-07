@@ -151,6 +151,12 @@ nmap  <Left>  <C-w>h
 nmap  <Right> <C-w>l
 
 
+" handy command to properly indent json files
+fun! JsonTool() range
+    execute a:firstline . "," . a:lastline . "!python -m json.tool"
+endfun
+comm! -range JsonTool <line1>,<line2>call JsonTool()
+
 " extras "
 
 " taken from /etc/vimrc
