@@ -22,16 +22,16 @@ au BufRead * normal zR
 " enable mouse by default
 set mouse=a
 " enable/disable mouse support
-nmap <silent> <Leader>m :silent set mouse=a<CR>:set mouse?<CR>
-nmap <silent> <Leader>M :silent set mouse=<CR>:set mouse?<CR>
+nnoremap <silent> <Leader>m :silent set mouse=a<CR>:set mouse?<CR>
+nnoremap <silent> <Leader>M :silent set mouse=<CR>:set mouse?<CR>
 " shortcut to check for external modifications
-nmap <silent> <Leader><CR> :checktime<CR>
+nnoremap <silent> <Leader><CR> :checktime<CR>
 
 
 " avoid messing with the screen
 set nowrap
 " switch line wrap
-nmap <silent> <Leader>w :silent set wrap!<CR>:set wrap?<CR>
+nnoremap <silent> <Leader>w :silent set wrap!<CR>:set wrap?<CR>
 
 " keep some context when moving
 set scrolloff=1
@@ -47,10 +47,10 @@ set noignorecase
 set nosmartcase
 
 " swap search highlight
-nmap <silent> <Leader><Leader> :nohlsearch<CR>
-nmap <silent> <Leader>h :silent set hlsearch!<CR>:set hlsearch?<CR>
+nnoremap <silent> <Leader><Leader> :nohlsearch<CR>
+nnoremap <silent> <Leader>h :silent set hlsearch!<CR>:set hlsearch?<CR>
 " swap case-insensitive search
-nmap <silent> <Leader>i :silent set ignorecase!<CR>:set ignorecase?<CR>
+nnoremap <silent> <Leader>i :silent set ignorecase!<CR>:set ignorecase?<CR>
 
 
 " clipboard "
@@ -58,7 +58,7 @@ nmap <silent> <Leader>i :silent set ignorecase!<CR>:set ignorecase?<CR>
 " use system registry by default
 set clipboard=unnamed
 " alternate mapping using Leader for when <F12> is unavailable
-nmap <silent> <Leader>p :silent set paste!<CR>
+nnoremap <silent> <Leader>p :silent set paste!<CR>
 
 
 " appearance "
@@ -81,13 +81,13 @@ set ruler
 " show line numbers on the side
 set number
 " swap line numbering
-nmap <silent> <Leader>n :silent set number!<CR>
+nnoremap <silent> <Leader>n :silent set number!<CR>
 
 " line bookmarks
 sign define bookmark text=@
-nmap <silent> <Leader>b :exe ":sign place " . line(".") . " name=bookmark line=" . line(".") . " file=" . expand("%:p")<CR>
-nmap <silent> <Leader>d :sign unplace<CR>
-nmap <silent> <Leader>D :sign unplace *<CR>
+nnoremap <silent> <Leader>b :exe ":sign place " . line(".") . " name=bookmark line=" . line(".") . " file=" . expand("%:p")<CR>
+nnoremap <silent> <Leader>d :sign unplace<CR>
+nnoremap <silent> <Leader>D :sign unplace *<CR>
 
 
 " whitespace and indentation "
@@ -103,10 +103,10 @@ set list
 set listchars=tab:-\ ,trail:_,precedes:<,extends:>
 
 " remove trailing spaces on the current line
-nmap <silent> <Leader>s :silent s/\s\+$<CR>
+nnoremap <silent> <Leader>s :silent s/\s\+$<CR>
 " remove trailing spaces on entire buffer without altering the cursor position
 " TODO avoid changing the search pattern and highlighting
-nmap <silent> <Leader>S :let _pos = getpos(".")<CR>:silent keepjumps %s/\s\+$//e<CR>:call setpos(".", _pos)<CR>
+nnoremap <silent> <Leader>S :let _pos = getpos(".")<CR>:silent keepjumps %s/\s\+$//e<CR>:call setpos(".", _pos)<CR>
 
 " tab and indent width
 set softtabstop=4
@@ -115,24 +115,24 @@ set shiftwidth=4
 au FileType ruby,html{,django},xml setlocal sw=2 sts=2
 
 " special mode for test files
-nmap <Leader>t :setlocal wrap<CR>:setlocal nolist<CR>:setlocal linebreak<CR>
-nmap <Leader>T :setlocal nowrap<CR>:setlocal list<CR>:setlocal nolinebreak<CR>
+nnoremap <Leader>t :setlocal wrap<CR>:setlocal nolist<CR>:setlocal linebreak<CR>
+nnoremap <Leader>T :setlocal nowrap<CR>:setlocal list<CR>:setlocal nolinebreak<CR>
 
 " helpful remappings "
 
 " mimic D
-nmap Y y$
+nnoremap Y y$
 
 " shortcuts to change buffers the same way as tabs
-nmap gb :bn<CR>
-nmap gB :bp<CR>
+nnoremap gb :bn<CR>
+nnoremap gB :bp<CR>
 " and to previous buffer
-nmap g. :b#<CR>
+nnoremap g. :b#<CR>
 
 " do not move the cursor when highlighting
 " TODO find a more elegant way to do this :P
-nmap * *Nzz
-nmap # #Nzz
+nnoremap * *Nzz
+nnoremap # #Nzz
 
 
 " vim zen "
@@ -145,10 +145,10 @@ nnoremap <CR> o<ESC>
 nnoremap <Space> :wa<CR>
 
 " use arrows to navigate split-windows
-nmap  <Up>    <C-w>k
-nmap  <Down>  <C-w>j
-nmap  <Left>  <C-w>h
-nmap  <Right> <C-w>l
+nnoremap <Up>    <C-w>k
+nnoremap <Down>  <C-w>j
+nnoremap <Left>  <C-w>h
+nnoremap <Right> <C-w>l
 
 
 " handy command to properly indent json files
