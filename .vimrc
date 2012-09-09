@@ -114,9 +114,32 @@ set shiftwidth=4
 " exceptions
 au FileType ruby,html{,django},xml setlocal sw=2 sts=2
 
-" special mode for test files
-nnoremap <Leader>t :setlocal wrap<CR>:setlocal nolist<CR>:setlocal linebreak<CR>
-nnoremap <Leader>T :setlocal nowrap<CR>:setlocal list<CR>:setlocal nolinebreak<CR>
+" special mode for text files
+fun! TextMode(mode) range
+    if a:mode == 'textmode'
+        setlocal filetype=text
+        setlocal wrap
+        setlocal nolist
+        setlocal linebreak
+        nnoremap <buffer> j gj
+        nnoremap <buffer> k gk
+        nnoremap <buffer> 0 g0
+        nnoremap <buffer> $ g$
+        echo 'textmode'
+    else
+        filetype detect
+        setlocal nowrap
+        setlocal list
+        setlocal nolinebreak
+        nunmap <buffer> j
+        nunmap <buffer> k
+        nunmap <buffer> 0
+        nunmap <buffer> $
+        echo 'notextmode'
+    endif
+endfun
+nnoremap <Leader>t :call TextMode('textmode')<CR>
+nnoremap <Leader>T :call TextMode('notextmode')<CR>
 
 " helpful remappings "
 
