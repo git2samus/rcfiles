@@ -207,4 +207,19 @@ jobs_prompt() {
     fi
 }; export -f jobs_prompt
 
+wget-mirror() {
+    wget --timestamping --recursive --level=inf --no-parent --page-requisites --convert-links --backup-converted "$@"
+}; export -f wget-mirror
+wget-mirror-no-robots() {
+    wget-mirror -e robots=off "$@"
+}; export -f wget-mirror-no-robots
+
+wget-fullpage() {
+    wget --page-requisites --span-hosts --convert-links "$@"
+}; export -f wget-fullpage
+wget-fullpage-no-robots() {
+    wget-fullpage -e robots=off "$@"
+}; export -f wget-fullpage-no-robots
+
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local
+

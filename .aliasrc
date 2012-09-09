@@ -28,9 +28,6 @@ alias fgrepc="fgrep --color"
 
 alias git-np="git --no-pager"
 
-alias wget-mirror="wget -e robots=off --timestamping --recursive --level=inf --no-parent --page-requisites --convert-links --backup-converted"
-alias wget-fullpage="wget -e robots=off --page-requisites --span-hosts --convert-links"
-
 alias rm-pyc="find -name '*.pyc' -delete"
 
 [[ -e ~/.aliasrc_local ]] && . ~/.aliasrc_local
