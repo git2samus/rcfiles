@@ -6,7 +6,6 @@ export VISUAL=$EDITOR
 export CDPATH=.:~:~/dev
 export PATH=$HOME/bin${PATH:+:$PATH}
 
-[[ -r ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
 [[ -r ~/.functionrc ]] && . ~/.functionrc
 [[ -r ~/.bashrc ]] && . ~/.bashrc
 

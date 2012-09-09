@@ -26,6 +26,7 @@ fi
 
 [[ -r ~/.bashrc_local ]] && . ~/.bashrc_local
 
+[[ -r ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
 # python's virtualenv (for when invoked from screen)
 [[ -z $VIRTUALENV_HOME ]] && if VIRTUALENV_HOME=$(rfind bin/activate); then
     source $VIRTUALENV_HOME
