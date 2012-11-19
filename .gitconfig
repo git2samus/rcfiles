@@ -11,5 +11,8 @@
 	default = tracking
 [merge]
 	tool = vimdiff
+	conflictstyle = diff3
 [core]
 	excludesfile = /home/samus/.gitignore
+[mergetool]
+	keepBackup = false

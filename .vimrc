@@ -18,6 +18,9 @@ filetype plugin indent on
 set foldmethod=indent
 " expand folds when opening files
 au BufRead * normal zR
+" extras for vim-latexsuite
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
 
 " enable mouse by default
 set mouse=a
@@ -160,8 +163,13 @@ nnoremap # #Nzz
 
 " vim zen "
 
-" avoid using escape to exit insert-mode (Ctrl-J is default)
+" avoid using escape to exit insert-mode (Ctrl-j is default)
 inoremap <CR> <ESC>
+" damn you latexmode! DO NOT STEAL MY <C-j>!!
+imap <Leader><C-J> <Plug>IMAP_JumpForward
+nmap <Leader><C-J> <Plug>IMAP_JumpForward
+vmap <Leader><C-J> <Plug>IMAP_JumpForward
+
 " use enter to add empty lines in normal mode
 nnoremap <CR> o<ESC>
 " space in normal-mode saves all (modified) files
