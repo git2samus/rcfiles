@@ -24,13 +24,7 @@ if [[ $- = *i* ]]; then
     unalias -a; [[ -r ~/.aliasrc ]] && . ~/.aliasrc
 fi
 
+[[ -r ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
+
 [[ -r ~/.bashrc_local ]] && . ~/.bashrc_local
 
-[[ -r ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
-# python's virtualenv (for when invoked from screen)
-[[ -z $VIRTUALENV_HOME ]] && if VIRTUALENV_HOME=$(rfind bin/activate); then
-    source $VIRTUALENV_HOME
-    export VIRTUALENV_HOME=${VIRTUALENV_HOME%/bin/activate}
-else
-    unset VIRTUALENV_HOME
-fi
