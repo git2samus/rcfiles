@@ -207,6 +207,18 @@ jobs_prompt() {
     fi
 }; export -f jobs_prompt
 
+git-repl() {
+    while IFS= read -rep "git$(__git_ps1)> " line; do
+        if [[ $line = \!* ]]; then
+            line=${line#\!}
+        elif [[ $line != git\ * ]]; then
+            line="git $line"
+        fi
+        eval "$line";
+        history -s "$line";
+    done
+}; export -f git-repl
+
 wget-mirror() {
     wget --timestamping --recursive --level=inf --no-parent --page-requisites --convert-links --backup-converted "$@"
 }; export -f wget-mirror
