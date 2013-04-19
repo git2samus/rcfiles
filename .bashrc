@@ -1,3 +1,5 @@
+. ~/.bash_profile # load again for non-login shells and such
+
 if [[ $- = *i* ]]; then
     shopt -s extglob failglob histappend checkwinsize
     ((${BASH_VERSINFO[0]} >= 4)) && shopt -s globstar
@@ -27,4 +29,3 @@ fi
 [[ -r ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
 
 [[ -r ~/.bashrc_local ]] && . ~/.bashrc_local
-
