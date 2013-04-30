@@ -89,8 +89,8 @@ nnoremap <silent> <Leader>n :silent set number!<CR>
 " line bookmarks
 sign define bookmark text=@
 nnoremap <silent> <Leader>b :exe ":sign place " . line(".") . " name=bookmark line=" . line(".") . " file=" . expand("%:p")<CR>
-nnoremap <silent> <Leader>d :sign unplace<CR>
-nnoremap <silent> <Leader>D :sign unplace *<CR>
+nnoremap <silent> <Leader>B :sign unplace<CR>
+nnoremap <silent> <Leader>* :sign unplace *<CR>
 
 
 " whitespace and indentation "
