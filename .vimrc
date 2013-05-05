@@ -40,6 +40,9 @@ nnoremap <silent> <Leader>w :silent set wrap!<CR>:set wrap?<CR>
 set scrolloff=1
 set sidescrolloff=5
 
+" move freely
+set virtualedit=all
+
 
 " enable search highlighting
 set hlsearch
