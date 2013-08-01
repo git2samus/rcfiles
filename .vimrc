@@ -35,6 +35,8 @@ nnoremap <silent> <Leader><CR> :checktime<CR>
 set nowrap
 " switch line wrap
 nnoremap <silent> <Leader>w :silent set wrap!<CR>:set wrap?<CR>
+" highlight expected code width
+set colorcolumn=80
 
 " keep some context when moving
 set scrolloff=1
@@ -125,6 +127,7 @@ fun! TextMode(mode) range
     if a:mode == 'textmode'
         setlocal filetype=text
         setlocal wrap
+        setlocal colorcolumn=
         setlocal nolist
         setlocal linebreak
         nnoremap <buffer> j gj
@@ -135,6 +138,7 @@ fun! TextMode(mode) range
     else
         filetype detect
         setlocal nowrap
+        setlocal colorcolumn=80
         setlocal list
         setlocal nolinebreak
         nunmap <buffer> j
