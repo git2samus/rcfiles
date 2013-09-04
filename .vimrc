@@ -39,7 +39,10 @@ set nowrap
 " switch line wrap
 nnoremap <silent> <Leader>w :silent set wrap!<CR>:set wrap?<CR>
 " highlight expected code width
-set colorcolumn=80
+"set colorcolumn=80
+" switch width marker
+nnoremap <silent> <Leader>c :silent set colorcolumn=80<CR>:set colorcolumn?<CR>
+nnoremap <silent> <Leader>C :silent set colorcolumn=<CR>:set colorcolumn?<CR>
 
 " keep some context when moving
 set scrolloff=1
