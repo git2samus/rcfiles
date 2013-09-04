@@ -14,6 +14,9 @@ set dir^=~/.vim/swp//
 syntax on
 " enable filetype-specific features
 filetype plugin indent on
+" configure vim's path from env vars
+let &path = &path . "," . substitute($VIMPATH, ':', ',', 'g')
+
 " autofold
 set foldmethod=indent
 " expand folds when opening files
