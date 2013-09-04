@@ -202,6 +202,9 @@ autocmd FileType python nnoremap <Leader>D Oimport pdb; pdb.set_trace()<Esc>
 autocmd FileType ruby nnoremap <Leader>d orequire "ruby-debug"; debugger<Esc>
 autocmd FileType ruby nnoremap <Leader>D Orequire "ruby-debug"; debugger<Esc>
 
+autocmd FileType eruby nnoremap <Leader>d o<% require "ruby-debug"; debugger %><Esc>
+autocmd FileType eruby nnoremap <Leader>D O<% require "ruby-debug"; debugger %><Esc>
+
 autocmd FileType haml nnoremap <Leader>d o- require "ruby-debug"; debugger<Esc>
 autocmd FileType haml nnoremap <Leader>D O- require "ruby-debug"; debugger<Esc>
 
