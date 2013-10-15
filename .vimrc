@@ -85,8 +85,8 @@ set laststatus=2
 set statusline=%<%f\ %{&paste?'(p)\ ':''}%h%m%r%=%-14.(%l,%c%V%)\ %P
 " enable wildmenu for tab-completion
 set wildmenu
-" configure wildmenu to behave more like bash
-set wildmode=longest:full
+" show all matches, complete longest
+set wildmode=list:longest
 " avoid to open python bytecode
 set wildignore=*.py[co]
 
@@ -235,4 +235,3 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
                   \ | wincmd p | diffthis
 endif
-
