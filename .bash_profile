@@ -11,3 +11,6 @@ if [[ -z $PROFILE_LOADED ]]; then export PROFILE_LOADED=1
 
     [[ -r ~/.bash_profile_local ]] && . ~/.bash_profile_local
 fi
+
+# on some weird situations (ssh mostly) .bashrc does not load
+. ~/.bashrc

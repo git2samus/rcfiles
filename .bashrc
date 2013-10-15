@@ -1,4 +1,6 @@
-. ~/.bash_profile # load again for non-login shells and such
+if [[ -z $PROFILE_LOADED ]]; then
+    . ~/.bash_profile # load again for non-login shells and such
+fi
 
 if [[ $- = *i* ]]; then
     shopt -s extglob failglob histappend checkwinsize
