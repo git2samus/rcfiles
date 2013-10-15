@@ -1,2 +1,3 @@
 startup_message off
 vbell off
+defscrollback 99999
