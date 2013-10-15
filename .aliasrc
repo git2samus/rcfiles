@@ -20,4 +20,6 @@ alias git-np="git --no-pager"
 
 alias rm-pyc="find -name '*.pyc' -delete"
 
+alias sc="screen -dmr"
+
 [[ -e ~/.aliasrc_local ]] && . ~/.aliasrc_local
