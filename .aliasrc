@@ -12,14 +12,30 @@ alias ll="ls -lh"
 alias lc="ls --color=auto"
 alias llc="ls -lh --color=auto"
 
-alias grepc="grep --color"
-alias egrepc="egrep --color"
-alias fgrepc="fgrep --color"
+alias grc="grep --color"
+alias egrc="egrep --color"
+alias fgrc="fgrep --color"
 
-alias git-np="git --no-pager"
+alias gnp="git --no-pager"
+alias gad='git add'
+alias gam='git amend'
+alias gch='git checkout'
+alias gco='git commit'
+alias gdi='git diff'
+alias gfe='git fetch'
+alias glo='git log'
+alias gme='git merge'
+alias gpl='git pull'
+alias gph='git push'
+alias grb='git rebase'
+alias gre='git reset'
+alias gst='git status'
+alias gsh='git stash'
+
+alias scr="screen -dmr"
+alias scl="screen -list"
+alias scs="screen -S"
 
 alias rm-pyc="find -name '*.pyc' -delete"
-
-alias sc="screen -dmr"
 
 [[ -e ~/.aliasrc_local ]] && . ~/.aliasrc_local
