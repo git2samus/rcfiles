@@ -7,6 +7,12 @@ rcd() {
     rmdir "$PWD" && cd ..
 }; export -f rcd
 
+exit_error() {
+    local errcode=${2:-$?}
+    echo "$1" >&2
+    exit "$errcode"
+}; export -f exit_error
+
 # check if first argument appears among the rest
 # for use with arrays, like: in_array "$var" "${arr[@]}"
 in_array() {
@@ -27,7 +33,7 @@ with() {
     local input=$1 output; shift
     if [[ -r $input ]]; then
         echo "cannot read from input file" >&2
-        exit 1
+        return 1
     fi
 
     output=$(mktemp)
