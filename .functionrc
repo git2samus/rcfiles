@@ -213,7 +213,7 @@ jobs_prompt() {
     fi
 }; export -f jobs_prompt
 
-git-repl() {
+git_repl() {
     while IFS= read -rep "git$(__git_ps1)> " line; do
         if [[ $line = \!* ]]; then
             line=${line#\!}
@@ -223,21 +223,21 @@ git-repl() {
         eval "$line";
         history -s "$line";
     done
-}; export -f git-repl
+}; export -f git_repl
 
-wget-mirror() {
+wget_mirror() {
     wget --timestamping --recursive --level=inf --no-parent --page-requisites --convert-links --backup-converted "$@"
-}; export -f wget-mirror
-wget-mirror-no-robots() {
-    wget-mirror -e robots=off "$@"
-}; export -f wget-mirror-no-robots
+}; export -f wget_mirror
+wget_mirror_no_robots() {
+    wget_mirror -e robots=off "$@"
+}; export -f wget_mirror_no_robots
 
-wget-fullpage() {
+wget_fullpage() {
     wget --page-requisites --span-hosts --convert-links "$@"
-}; export -f wget-fullpage
-wget-fullpage-no-robots() {
-    wget-fullpage -e robots=off "$@"
-}; export -f wget-fullpage-no-robots
+}; export -f wget_fullpage
+wget_fullpage_no_robots() {
+    wget_fullpage -e robots=off "$@"
+}; export -f wget_fullpage_no_robots
 
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local
 
