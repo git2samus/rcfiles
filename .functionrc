@@ -239,5 +239,10 @@ wget_fullpage_no_robots() {
     wget_fullpage -e robots=off "$@"
 }; export -f wget_fullpage_no_robots
 
+git_ignore() (
+    # gitignore-io generator
+    IFS=,; curl "http://gitignore.io/api/$*"
+); export -f git_ignore
+
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local
 
