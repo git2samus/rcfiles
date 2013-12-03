@@ -198,7 +198,7 @@ nnoremap <Right> <C-w>l
 " language-specific debuggers
 autocmd FileType python nnoremap <Leader>d oimport pdb; pdb.set_trace()<Esc>
 autocmd FileType python nnoremap <Leader>D Oimport pdb; pdb.set_trace()<Esc>
-autocmd FileType python set makeprg=pyflakes\ %\ &&\ pep8\ --ignore=E501\ %
+autocmd FileType python setlocal makeprg=pyflakes\ %\ &&\ pep8\ --ignore=E501\ %
 
 autocmd FileType ruby nnoremap <Leader>d orequire "ruby-debug"; debugger<Esc>
 autocmd FileType ruby nnoremap <Leader>D Orequire "ruby-debug"; debugger<Esc>
@@ -209,7 +209,7 @@ autocmd FileType eruby nnoremap <Leader>D O<% require "ruby-debug"; debugger %><
 autocmd FileType haml nnoremap <Leader>d o- require "ruby-debug"; debugger<Esc>
 autocmd FileType haml nnoremap <Leader>D O- require "ruby-debug"; debugger<Esc>
 
-autocmd FileType java set makeprg=javac\ %
+autocmd FileType java setlocal makeprg=javac\ %
 
 " handy command to properly indent json files
 fun! JsonTool() range
