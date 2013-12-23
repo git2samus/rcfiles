@@ -239,6 +239,18 @@ wget_fullpage_no_robots() {
     wget_fullpage -e robots=off "$@"
 }; export -f wget_fullpage_no_robots
 
+stash() {
+    local i args=()
+    for arg do
+        if [[ $arg != *[!0-9]* ]]; then
+            args+=("stash@{$arg}")
+        else
+            args+=("$arg")
+        fi
+    done
+    git stash "${args[@]}"
+}; export -f stash
+
 gitignore() (
     gi_args=(); for arg; do
         if [[ $arg = -- ]]; then
@@ -252,4 +264,3 @@ gitignore() (
 ); export -f gitignore
 
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local
-
