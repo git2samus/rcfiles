@@ -39,3 +39,4 @@ alias scs="screen -S"
 alias rm-pyc="find -name '*.pyc' -delete"
 
 [[ -e ~/.bash_aliases_local ]] && . ~/.bash_aliases_local
+alias tree-log='git log --all --graph --decorate --oneline'
