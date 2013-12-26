@@ -239,10 +239,28 @@ wget_fullpage_no_robots() {
     wget_fullpage -e robots=off "$@"
 }; export -f wget_fullpage_no_robots
 
-git_ignore() (
-    # gitignore-io generator
-    IFS=,; curl "http://gitignore.io/api/$*"
-); export -f git_ignore
+stash() {
+    local i args=()
+    for arg do
+        if [[ $arg != *[!0-9]* ]]; then
+            args+=("stash@{$arg}")
+        else
+            args+=("$arg")
+        fi
+    done
+    git stash "${args[@]}"
+}; export -f stash
+
+gitignore() (
+    gi_args=(); for arg; do
+        if [[ $arg = -- ]]; then
+            curl_args=("${gi_args[@]}")
+            gi_args=()
+        else
+            gi_args+=("$arg")
+        fi
+    done
+    IFS=,; curl "${curl_args[@]}" http://gitignore.io/api/"${gi_args[*]}"
+); export -f gitignore
 
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local
-
