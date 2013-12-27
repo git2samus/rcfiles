@@ -20,6 +20,7 @@ alias add='git add'
 alias amend='git amend'
 alias checkout='git checkout'
 alias commit='git commit'
+alias log='git log'
 alias pull='git pull'
 alias push='git push'
 alias reset='git reset' # this hides shell's reset but fuckit
