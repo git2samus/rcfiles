@@ -1,42 +1,35 @@
 # vim: set filetype=sh:
 
-alias mtab="cat /etc/mtab"
-alias fstab="cat /etc/fstab"
+alias mtab='cat /etc/mtab'
+alias fstab='cat /etc/fstab'
 
-alias today="date +%d/%m/%y"
+alias today='date +%d/%m/%y'
 
-alias :e="vim"
-alias :q="exit"
+alias :e='vim'
+alias :q='exit'
 
-alias ll="ls -lh"
-alias lc="ls --color=auto"
-alias llc="ls -lh --color=auto"
+alias ll='ls -lh'
+alias lc='ls --color=auto'
+alias llc='ls -lh --color=auto'
 
-alias grc="grep --color"
-alias egrc="egrep --color"
-alias fgrc="fgrep --color"
+alias grep-c='grep --color'
+alias egrep-c='egrep --color'
+alias fgrep-c='fgrep --color'
 
-alias gnp="git --no-pager"
-alias gad='git add'
-alias gam='git amend'
-alias gch='git checkout'
-alias gco='git commit'
-alias gdi='git diff'
-alias gfe='git fetch'
-alias glo='git log'
-alias gme='git merge'
-alias gpl='git pull'
-alias gph='git push'
-alias grb='git rebase'
-alias gre='git reset'
-alias gst='git status'
-alias gsh='git stash'
+alias add='git add'
+alias amend='git amend'
+alias checkout='git checkout'
+alias commit='git commit'
+alias pull='git pull'
+alias push='git push'
+alias reset='git reset' # this hides shell's reset but fuckit
 
+alias git-np='git --no-pager'
 alias tree-log='git log --all --graph --decorate --oneline'
 
-alias scr="screen -dmr"
-alias scl="screen -list"
-alias scs="screen -S"
+alias scr='screen -dmr'
+alias scl='screen -list'
+alias scs='screen -S'
 
 alias rm-pyc="find -name '*.pyc' -delete"
 
