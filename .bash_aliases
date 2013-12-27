@@ -32,6 +32,8 @@ alias gre='git reset'
 alias gst='git status'
 alias gsh='git stash'
 
+alias tree-log='git log --all --graph --decorate --oneline'
+
 alias scr="screen -dmr"
 alias scl="screen -list"
 alias scs="screen -S"
@@ -39,4 +41,3 @@ alias scs="screen -S"
 alias rm-pyc="find -name '*.pyc' -delete"
 
 [[ -e ~/.bash_aliases_local ]] && . ~/.bash_aliases_local
-alias tree-log='git log --all --graph --decorate --oneline'
