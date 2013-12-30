@@ -1,5 +1,5 @@
 if [[ -z $PROFILE_LOADED ]]; then export PROFILE_LOADED=1
-    export HISTSIZE=10000 HISTCONTROL=erasedups HISTIGNORE=[bf]g:jobs:clear:exit
+    export HISTSIZE=10000 HISTCONTROL=erasedups
     export PROMPT_COMMAND='unset HISTFILESIZE; history -a'
     export PROMPT_DIRTRIM=2
     export EDITOR=vim
