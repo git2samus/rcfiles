@@ -16,6 +16,8 @@ alias grep-c='grep --color'
 alias egrep-c='egrep --color'
 alias fgrep-c='fgrep --color'
 
+# some of these hide shell commands (eg 'reset', 'diff')
+# to bypass use: 'command reset', 'command diff', etc.
 alias add='git add'
 alias amend='git amend'
 alias blame='git blame'
@@ -28,7 +30,7 @@ alias merge='git merge'
 alias pull='git pull'
 alias push='git push'
 alias rebase='git rebase'
-alias reset='git reset' # this hides shell's reset but fuckit
+alias reset='git reset'
 alias show='git show'
 alias status='git status'
 alias tag='git tag'
