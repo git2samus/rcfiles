@@ -25,7 +25,7 @@ if [[ $- = *i* ]]; then
     t_green=\\[$(tput setaf 2)\\] t_yellow=\\[$(tput setaf 3)\\] t_reset=\\[$(tput sgr0)\\]
     PS1="$t_reset\\n$t_green\\u@\\h $t_yellow\\w$t_reset$gitps1\\n\$(jobs_prompt)\\$ "; PS2='> '; PS3='? '; PS4='+ '
 
-    unalias -a; [[ -r ~/.bash_aliases ]] && . ~/.bash_aliases
+    unalias -a; [[ -r ~/.aliasrc ]] && . ~/.aliasrc
 fi
 
 [[ -r ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm

@@ -49,4 +49,4 @@ alias scs='screen -S'
 
 alias rm-pyc="find -name '*.pyc' -delete"
 
-[[ -e ~/.bash_aliases_local ]] && . ~/.bash_aliases_local
+[[ -e ~/.aliasrc_local ]] && . ~/.aliasrc_local
