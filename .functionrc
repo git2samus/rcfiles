@@ -83,17 +83,26 @@ mklab() {
     cd - && rm -r "$d"
 }; export -f mklab
 
+str_split() {
+    local OLDIFS=$IFS
+    IFS=${1:?"Missing separator"}
+    local srcval=${2:?"Missing value to split"}
+    local dstvar=${3:?"Missing destination array name"}
+    eval "$dstvar=(\$srcval)"
+    IFS=$OLDIFS
+}; export -f str_split
+
 list_join() {
     local OLDIFS=$IFS
     IFS=${1:?"Missing separator"}
     echo "${*:2}"
     IFS=$OLDIFS
 }; export -f list_join
+
 # shortcuts (newline-join, colon-join)
 nl_join() {
     list_join $'\n' "$@"
 }; export -f nl_join
-
 cl_join() {
     list_join : "$@"
 }; export -f cl_join
