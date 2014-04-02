@@ -18,6 +18,7 @@ alias fgrep-c='fgrep --color'
 
 # some of these hide shell commands (eg 'reset', 'diff')
 # to bypass use: 'command reset', 'command diff', etc.
+# 'stash' implemented as function
 alias add='git add'
 alias amend='git amend'
 alias bisect='git bisect'

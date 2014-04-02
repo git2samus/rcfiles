@@ -285,6 +285,50 @@ stash() {
     git stash "${args[@]}"
 }; export -f stash
 
+# lookup branch based on prefix (uses / as hierarchy)
+# outputs matching branch on stdin
+# returns 1 and output original when not found
+lookup_branch_prefix() {
+    local target=${1:?Missing target prefix} ref refparts n
+
+    if command git rev-parse -q --verify "$target" 2>/dev/null; then
+        echo "$target"
+        return
+    fi
+
+    while read ref; do
+        ref=${ref#\* } ref=${ref%% *} ref=${ref#remotes/}
+        str_split / "$ref" refparts
+        for ((n=${#refparts[@]}; --n>=0;)); do
+            if [[ $(list_join / "${refparts[@]:$n}") == $target* ]]; then
+                echo "$(list_join / "${refparts[@]}")"
+                return
+            fi
+        done
+    done < <(command git branch -a)
+
+    echo "$target"
+    return 1
+}; export -f lookup_branch_prefix
+
+# make `git` recognize b:<prefix> branch notations
+git() {
+    local args=("$@") n
+
+    for ((n=0; n<$#; n++)); do
+        #TODO support all notations specified by `man gitrevisions`
+        if [[ ${args[$n]} == b:* ]]; then
+            if branch=$(lookup_branch_prefix "${args[$n]:2}"); then
+                args[$n]=$branch
+            else
+                echo "WARN: Unknown branch: ${args[$n]}" >&2
+            fi
+        fi
+    done
+
+    command git "${args[@]}"
+}; export -f git
+
 # improved version of `gi` from gitignore.io (see: <https://github.com/joeblau/gitignore.io/issues/20>)
 gitignore() (
     gi_args=(); for arg; do
