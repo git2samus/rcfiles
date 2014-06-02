@@ -330,16 +330,21 @@ git() {
 }; export -f git
 
 # improved version of `gi` from gitignore.io (see: <https://github.com/joeblau/gitignore.io/issues/20>)
-gitignore() (
+stdout_gi() (
     gi_args=(); for arg; do
         if [[ $arg = -- ]]; then
-            curl_args=("${gi_args[@]}")
+            wget_args=("${gi_args[@]}")
             gi_args=()
         else
             gi_args+=("$arg")
         fi
     done
-    IFS=,; curl "${curl_args[@]}" http://gitignore.io/api/"${gi_args[*]}"
-); export -f gitignore
+    IFS=,; wget -O- "${wget_args[@]}" http://gitignore.io/api/"${gi_args[*]}"
+); export -f stdout_gi
+
+# have the default command automatically update current .gitignore
+gi() {
+    stdout_gi "$@" > .gitignore
+}; export -f gi
 
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local
