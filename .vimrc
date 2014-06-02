@@ -1,5 +1,8 @@
 " vim behavior "
 
+" plugin manager
+execute pathogen#infect()
+
 " disable vi compatibility
 set nocompatible
 " allow to change buffers without saving them
@@ -25,8 +28,8 @@ au BufRead * normal zR
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
 
-" enable mouse by default
-set mouse=a
+" disable mouse by default
+set mouse=
 " enable/disable mouse support
 nnoremap <silent> <Leader>m :silent set mouse=a<CR>:set mouse?<CR>
 nnoremap <silent> <Leader>M :silent set mouse=<CR>:set mouse?<CR>
@@ -88,7 +91,7 @@ set wildmenu
 " show all matches, complete longest
 set wildmode=list:longest
 " avoid to open python bytecode
-set wildignore=*.py[co]
+set wildignore=*.swp,*.py[co],*.class,*.beam
 
 " show line numbers in statusbar
 set ruler
