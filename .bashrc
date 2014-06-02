@@ -31,3 +31,5 @@ fi
 [[ -r ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
 
 [[ -r ~/.bashrc_local ]] && . ~/.bashrc_local
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
