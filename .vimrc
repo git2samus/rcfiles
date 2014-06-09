@@ -17,6 +17,7 @@ set dir^=~/.vim/swp//
 syntax on
 " enable filetype-specific features
 filetype plugin indent on
+
 " configure vim's path from env vars
 let &path = &path . "," . substitute($VIMPATH, ':', ',', 'g')
 
@@ -134,7 +135,7 @@ au FileType ruby,html{,django},xml setlocal sw=2 sts=2
 " special mode for text files
 fun! TextMode(mode) range
     if a:mode == 'textmode'
-        setlocal filetype=text
+        "setlocal filetype=text
         setlocal wrap
         setlocal colorcolumn=
         setlocal nolist
@@ -145,7 +146,7 @@ fun! TextMode(mode) range
         nnoremap <buffer> $ g$
         echo 'textmode'
     else
-        filetype detect
+        "filetype detect
         setlocal nowrap
         setlocal colorcolumn=80
         setlocal list
