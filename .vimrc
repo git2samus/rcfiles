@@ -198,6 +198,9 @@ nnoremap <Down>  <C-w>j
 nnoremap <Left>  <C-w>h
 nnoremap <Right> <C-w>l
 
+" easier normal mode plus consistent forward-backward repeat movement
+noremap , :
+noremap : ,
 
 " language-specific debuggers
 autocmd FileType python nnoremap <Leader>d oimport pdb; pdb.set_trace()<Esc>
