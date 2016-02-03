@@ -117,7 +117,12 @@ within() (
 ## interactive-mode helpers
 # run command until exit status is zero (usage: retry [<delay>] <cmd> <args>...)
 retry() {
-    local delay=1 n
+    local i always=0 delay=3
+
+    if [[ $1 == --always ]]; then
+        always=1
+        shift
+    fi
 
     if ! [[ $1 = *[^0-9]* ]]; then
         #TODO allow delay=0 (prevents Ctrl-C)
@@ -128,11 +133,12 @@ retry() {
     fi
 
     # run command
-    while ! "$@"; do
-        echo "retrying in ${delay}s" >&2
-        for ((n=delay; n>0; n--)); do
-            sleep 1 || return
-        done
+    while "$@"; (( $? || $always )); do
+        for ((i=delay; i>0; i--)); do
+            echo "Retrying in $i" >&2
+            sleep 1
+        done || break
+        echo "Retrying..."
     done
 }; export -f retry
 
@@ -331,20 +337,36 @@ git() {
 
 # improved version of `gi` from gitignore.io (see: <https://github.com/joeblau/gitignore.io/issues/20>)
 stdout_gi() (
-    gi_args=(); for arg; do
+    gi_args=()
+    for arg; do
         if [[ $arg = -- ]]; then
-            wget_args=("${gi_args[@]}")
-            gi_args=()
+            wget_args=("${gi_args[@]}"); gi_args=()
         else
             gi_args+=("$arg")
         fi
     done
-    IFS=,; wget -O- "${wget_args[@]}" http://gitignore.io/api/"${gi_args[*]}"
+    wget -O- "${wget_args[@]}" https://www.gitignore.io/api/"$(list_join , "${gi_args[@]}")"
 ); export -f stdout_gi
 
 # have the default command automatically update current .gitignore
 gi() {
-    stdout_gi "$@" > .gitignore
+    stdout_gi "$@" >> .gitignore
 }; export -f gi
+
+gi_list() (
+    str_split , "$(wget -qO- https://www.gitignore.io/api/list)" list
+    printf '%s\n' "${list[@]}"
+); export -f gi_list
+
+# replace `which` implemented as a script with built-ins
+which() {
+    hash "$1" && hash -t "$1"
+}; export -f which
+
+# start screen session with separate history file
+scs() {
+    local session=${1:?Missing session name}; shift
+    HISTFILE=~/.bash_history_$session screen -S "$session" "$@"
+}; export -f scs
 
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local

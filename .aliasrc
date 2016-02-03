@@ -25,6 +25,7 @@ alias bisect='git bisect'
 alias blame='git blame'
 alias branch='git branch'
 alias checkout='git checkout'
+alias clone='git clone'
 alias commit='git commit'
 alias diff='git diff'
 alias feature='git flow feature'
@@ -47,8 +48,12 @@ alias tree-log='git log --all --graph --decorate --oneline'
 
 alias scr='screen -dmr'
 alias scl='screen -list'
-alias scs='screen -S'
+#alias scs moved to .functionrc
 
 alias rm-pyc="find -name '*.pyc' -delete"
+alias rm-swp='rm ~/.vim/swp/*'
+
+alias bx='bundle exec'
+alias vi='vim'
 
 [[ -e ~/.aliasrc_local ]] && . ~/.aliasrc_local

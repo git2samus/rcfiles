@@ -96,8 +96,8 @@ set wildignore=*.swp,*.py[co],*.class,*.beam
 
 " show line numbers in statusbar
 set ruler
-" show line numbers on the side
-set number
+" hide line numbers on the side by default
+set nonumber
 " swap line numbering
 nnoremap <silent> <Leader>n :silent set number!<CR>
 
@@ -130,7 +130,7 @@ nnoremap <silent> <Leader>S :let _pos = getpos(".")<CR>:silent keepjumps %s/\s\+
 set softtabstop=4
 set shiftwidth=4
 " exceptions
-au FileType ruby,html{,django},xml setlocal sw=2 sts=2
+au FileType {,e}ruby,html{,django},xml,javascript,coffee,jade,{h,y}aml,css setlocal sw=2 sts=2
 
 " special mode for text files
 fun! TextMode(mode) range
