@@ -1,6 +1,7 @@
 if [[ -z $PROFILE_LOADED ]]; then
     . ~/.bash_profile # load again for non-login shells and such
 fi
+. ~/.bash_profile_local # tmp
 
 if [[ $- = *i* ]]; then
     shopt -s extglob failglob histappend checkwinsize
@@ -33,3 +34,6 @@ fi
 [[ -r ~/.bashrc_local ]] && . ~/.bashrc_local
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
