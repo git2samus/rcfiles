@@ -14,3 +14,4 @@ fi
 
 # on some weird situations (ssh mostly) .bashrc does not load
 . ~/.bashrc
+export LESS=-SR

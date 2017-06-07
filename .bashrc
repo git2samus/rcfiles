@@ -3,7 +3,7 @@ if [[ -z $PROFILE_LOADED ]]; then
 fi
 
 if [[ $- = *i* ]]; then
-    shopt -s extglob failglob histappend checkwinsize
+    shopt -s extglob failglob histappend checkwinsize autocd
     ((${BASH_VERSINFO[0]} >= 4)) && shopt -s globstar
 
     # TODO: make conditional based on editing-mode (note: when changing modes from .inputrc $SHELLOPTS does not recognize it)

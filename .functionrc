@@ -347,4 +347,7 @@ gi() {
     stdout_gi "$@" > .gitignore
 }; export -f gi
 
+# run command outside shell history
+skip() { local last; read last _ <<<$(history | tail -n1); history -d "$last"; "$@"; }
+
 [[ -e ~/.functionrc_local ]] && . ~/.functionrc_local

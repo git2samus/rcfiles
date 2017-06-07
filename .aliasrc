@@ -16,6 +16,11 @@ alias grep-c='grep --color'
 alias egrep-c='egrep --color'
 alias fgrep-c='fgrep --color'
 
+alias bx='bundle exec'
+
+# can't use @ as a function name
+alias @='skip'
+
 # some of these hide shell commands (eg 'reset', 'diff')
 # to bypass use: 'command reset', 'command diff', etc.
 # 'stash' implemented as function
@@ -25,6 +30,7 @@ alias bisect='git bisect'
 alias blame='git blame'
 alias branch='git branch'
 alias checkout='git checkout'
+alias clone='git clone'
 alias commit='git commit'
 alias diff='git diff'
 alias feature='git flow feature'
@@ -49,6 +55,6 @@ alias scr='screen -dmr'
 alias scl='screen -list'
 alias scs='screen -S'
 
-alias rm-pyc="find -name '*.pyc' -delete"
+alias rm-pyc="find . -name '*.pyc' -delete"
 
 [[ -e ~/.aliasrc_local ]] && . ~/.aliasrc_local

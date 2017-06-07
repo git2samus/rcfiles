@@ -86,7 +86,7 @@ colorscheme desert
 
 " enable statusbar
 set laststatus=2
-set statusline=%<%f\ %{&paste?'(p)\ ':''}%h%m%r%=%-14.(%l,%c%V%)\ %P
+set statusline=%<%f\ [%{&encoding}]%{&paste?'\ (p)\ ':''}%h%m%r%=%-14.(%l,%c%V%)\ %P
 " enable wildmenu for tab-completion
 set wildmenu
 " show all matches, complete longest
