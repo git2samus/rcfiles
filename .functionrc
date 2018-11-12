@@ -51,8 +51,14 @@ str_split() {
     local OLDIFS=$IFS
     IFS=${1:?"Missing separator"}
     local srcval=${2:?"Missing value to split"}
-    local dstvar=${3:?"Missing destination array name"}
-    eval "$dstvar=(\$srcval)" # hail satan!
+    if [[ -n $3 ]]; then
+        local dstname=$3
+        eval "$dstname=(\$srcval)" # hail satan!
+    else
+        for part in $srcval; do
+            echo "$part"
+        done
+    fi
     IFS=$OLDIFS
 }; export -f str_split
 
