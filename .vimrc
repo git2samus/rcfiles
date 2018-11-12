@@ -17,6 +17,11 @@ set dir^=~/.vim/swp//
 syntax on
 " enable filetype-specific features
 filetype plugin indent on
+" file extensions not recognized by default
+au BufNewFile,BufRead *.jbuilder set filetype=ruby
+au BufNewFile,BufRead *.dump set filetype=sql
+au BufNewFile,BufRead *.vue set filetype=javascript
+au BufNewFile,BufRead *.slim set filetype=haml
 
 " configure vim's path from env vars
 let &path = &path . "," . substitute($VIMPATH, ':', ',', 'g')
@@ -130,7 +135,7 @@ nnoremap <silent> <Leader>S :let _pos = getpos(".")<CR>:silent keepjumps %s/\s\+
 set softtabstop=4
 set shiftwidth=4
 " exceptions
-au FileType ruby,html{,django},xml setlocal sw=2 sts=2
+au FileType ruby,html{,django},xml,eruby,javascript setlocal sw=2 sts=2
 
 " special mode for text files
 fun! TextMode(mode) range
