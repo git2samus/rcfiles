@@ -105,6 +105,7 @@ set ruler
 set number
 " swap line numbering
 nnoremap <silent> <Leader>n :silent set number!<CR>
+nnoremap <silent> <Leader>N :silent set relativenumber!<CR>
 
 " line bookmarks
 sign define bookmark text=@
@@ -192,8 +193,9 @@ imap <Leader><C-J> <Plug>IMAP_JumpForward
 nmap <Leader><C-J> <Plug>IMAP_JumpForward
 vmap <Leader><C-J> <Plug>IMAP_JumpForward
 
-" use enter to add empty lines in normal mode
+" use enter/backspace to add/remove lines in normal mode
 nnoremap <CR> o<ESC>
+nnoremap <Backspace> ddk
 " space in normal-mode saves all (modified) files
 nnoremap <Space> :wa<CR>
 
@@ -212,14 +214,14 @@ autocmd FileType python nnoremap <Leader>d oimport pdb; pdb.set_trace()<Esc>
 autocmd FileType python nnoremap <Leader>D Oimport pdb; pdb.set_trace()<Esc>
 autocmd FileType python setlocal makeprg=pyflakes\ %\ &&\ pep8\ --ignore=E501\ %
 
-autocmd FileType ruby nnoremap <Leader>d orequire "ruby-debug"; debugger<Esc>
-autocmd FileType ruby nnoremap <Leader>D Orequire "ruby-debug"; debugger<Esc>
+autocmd FileType ruby nnoremap <Leader>d orequire "byebug"; debugger<Esc>
+autocmd FileType ruby nnoremap <Leader>D Orequire "byebug"; debugger<Esc>
 
-autocmd FileType eruby nnoremap <Leader>d o<% require "ruby-debug"; debugger %><Esc>
-autocmd FileType eruby nnoremap <Leader>D O<% require "ruby-debug"; debugger %><Esc>
+autocmd FileType eruby nnoremap <Leader>d o<% require "byebug"; debugger %><Esc>
+autocmd FileType eruby nnoremap <Leader>D O<% require "byebug"; debugger %><Esc>
 
-autocmd FileType haml nnoremap <Leader>d o- require "ruby-debug"; debugger<Esc>
-autocmd FileType haml nnoremap <Leader>D O- require "ruby-debug"; debugger<Esc>
+autocmd FileType haml nnoremap <Leader>d o- require "byebug"; debugger<Esc>
+autocmd FileType haml nnoremap <Leader>D O- require "byebug"; debugger<Esc>
 
 autocmd FileType java setlocal makeprg=javac\ %
 
