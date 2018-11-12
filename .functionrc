@@ -194,7 +194,7 @@ svim() {
     local parent session branch a target
     if [[ $1 = git ]]; then
         shift
-        branch=$(git rev-parse --abbrev-ref HEAD)
+        branch=$(branch_name)
     fi
 
     parent=${PWD%/*}
@@ -290,6 +290,11 @@ stash() {
 
     git stash "${args[@]}"
 }; export -f stash
+
+# shourtcut to get current branch name
+branch_name() {
+    git rev-parse --abbrev-ref HEAD
+}; export -f branch_name
 
 # lookup branch based on prefix (uses / as hierarchy)
 # outputs matching branch on stdin
